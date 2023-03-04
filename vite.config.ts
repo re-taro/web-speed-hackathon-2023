@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
+import { defineConfig, splitVendorChunkPlugin } from 'vite';
 import { ViteEjsPlugin } from 'vite-plugin-ejs';
 import topLevelAwait from 'vite-plugin-top-level-await';
 import visualizer from 'rollup-plugin-visualizer';
@@ -19,12 +19,18 @@ export default defineConfig(async({ mode }) => {
     },
     plugins: [
       react(),
+      splitVendorChunkPlugin(),
       topLevelAwait(),
       ViteEjsPlugin({
         module: '/src/client/index.tsx',
         title: '買えるオーガニック',
       }),
-      mode === 'analyze' && visualizer(),
+      mode === 'analyze' && visualizer({
+        open: true,
+        filename: 'dist/stats.html',
+        gzipSize: true,
+        brotliSize: true,
+      }),
       compress({ algorithm: 'brotliCompress', ext: '.br' }),
     ],
   };
