@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { FaPlay } from 'react-icons/fa';
 import { getMediaType } from '../../../../utils/get_media_type';
 import { Icon } from '../../../foundation/Icon/Icon';
 import { Image } from '../../../foundation/Image/Image';
@@ -26,7 +27,7 @@ export const MediaItem: FC<Props> = ({ file }) => {
       <Image fill src={imageSrc} />
       {mediaType === 'video' && (
         <div className={styles.playIcon()}>
-          <Icon color="#ffffff" height={16} type="FaPlay" width={16} />
+          <Icon color="#ffffff" height={16} icon={FaPlay} width={16} />
         </div>
       )}
     </div>

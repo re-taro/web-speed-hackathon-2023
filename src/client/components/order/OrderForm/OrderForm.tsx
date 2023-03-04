@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import { useEffect } from 'react';
 
-import { useZipcode } from '../../../hooks/useZipCode';
+import { useZipcode } from '../../../hooks/useZipcode';
 import { PrimaryButton } from '../../foundation/PrimaryButton/PrimaryButton';
 import { TextInput } from '../../foundation/TextInput/TextInput';
 
