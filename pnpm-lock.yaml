@@ -55,7 +55,6 @@ specifiers:
   react-error-boundary: 3.1.4
   react-helmet: 6.1.0
   react-icons: 4.7.1
-  react-is: 18.2.0
   react-overlays: 5.2.1
   react-router-dom: 6.4.5
   reflect-metadata: 0.1.13
@@ -104,7 +103,6 @@ dependencies:
   react-error-boundary: 3.1.4_react@18.2.0
   react-helmet: 6.1.0_react@18.2.0
   react-icons: 4.7.1_react@18.2.0
-  react-is: 18.2.0
   react-overlays: 5.2.1_biqbaboplfbrettd7655fr4n2y
   react-router-dom: 6.4.5_biqbaboplfbrettd7655fr4n2y
   reflect-metadata: 0.1.13
@@ -5764,10 +5762,6 @@ packages:
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
-
-  /react-is/18.2.0:
-    resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
-    dev: false
 
   /react-lifecycles-compat/3.0.4:
     resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}

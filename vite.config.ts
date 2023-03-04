@@ -12,7 +12,10 @@ export default defineConfig(async({ mode }) => {
       minify: 'terser',
       rollupOptions: {
         output: {
-          experimentalMinChunkSize: 40960,
+          manualChunks: {
+            vendor: ['react', 'react-dom', 'react-router-dom'],
+            apollo: ['@apollo/client', 'graphql'],
+          },
         },
       },
       target: 'chrome110',
