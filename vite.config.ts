@@ -1,48 +1,31 @@
-import path from 'node:path';
-
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import { ViteEjsPlugin } from 'vite-plugin-ejs';
 import topLevelAwait from 'vite-plugin-top-level-await';
-import wasm from 'vite-plugin-wasm';
+import visualizer from 'rollup-plugin-visualizer';
+import compress from 'vite-plugin-compression';
 
-import { getFileList } from './tools/get_file_list';
-
-const publicDir = path.resolve(__dirname, './public');
-const getPublicFileList = async (targetPath: string) => {
-  const filePaths = await getFileList(targetPath);
-  const publicFiles = filePaths
-    .map((filePath) => path.relative(publicDir, filePath))
-    .map((filePath) => path.join('/', filePath));
-
-  return publicFiles;
-};
-
-export default defineConfig(async () => {
-  const videos = await getPublicFileList(path.resolve(publicDir, 'videos'));
-
+export default defineConfig(async({ mode }) => {
   return {
     build: {
-      assetsInlineLimit: 20480,
-      cssCodeSplit: false,
-      cssTarget: 'es6',
-      minify: false,
+      outDir: 'dist/public',
+      minify: 'terser',
       rollupOptions: {
         output: {
           experimentalMinChunkSize: 40960,
         },
       },
-      target: 'es2015',
+      target: 'chrome110',
     },
     plugins: [
       react(),
-      wasm(),
       topLevelAwait(),
       ViteEjsPlugin({
         module: '/src/client/index.tsx',
         title: '買えるオーガニック',
-        videos,
       }),
+      mode === 'analyze' && visualizer(),
+      compress({ algorithm: 'brotliCompress', ext: '.br' }),
     ],
   };
 });
