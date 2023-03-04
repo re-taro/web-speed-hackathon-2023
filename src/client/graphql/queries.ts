@@ -1,18 +1,18 @@
 import { gql } from '@apollo/client';
 
-import type {
-  AuthUserFragmentResponse,
-  FeatureSectionFragmentResponse,
-  ProductReviewFragmentResponse,
-  ProductWithReviewFragmentResponse,
-  RecommendationFragmentResponse,
-} from './fragments';
 import {
   AuthUserFragment,
   FeatureSectionFragment,
   ProductReviewFragment,
   ProductWithReviewFragment,
   RecommendationFragment,
+} from './fragments';
+import type {
+  AuthUserFragmentResponse,
+  FeatureSectionFragmentResponse,
+  ProductReviewFragmentResponse,
+  ProductWithReviewFragmentResponse,
+  RecommendationFragmentResponse,
 } from './fragments';
 
 export const GetAuthUserQuery = gql`
@@ -24,9 +24,9 @@ export const GetAuthUserQuery = gql`
     }
   }
 `;
-export type GetUserAuthQueryResponse = {
-  me: AuthUserFragmentResponse | null;
-};
+export interface GetUserAuthQueryResponse {
+  me: AuthUserFragmentResponse | null
+}
 
 export const GetProductReviewsQuery = gql`
   ${ProductReviewFragment}
@@ -37,9 +37,9 @@ export const GetProductReviewsQuery = gql`
     }
   }
 `;
-export type GetProductReviewsQueryResponse = {
-  product: ProductReviewFragmentResponse;
-};
+export interface GetProductReviewsQueryResponse {
+  product: ProductReviewFragmentResponse
+}
 
 export const GetProductDetailsQuery = gql`
   ${ProductWithReviewFragment}
@@ -50,9 +50,9 @@ export const GetProductDetailsQuery = gql`
     }
   }
 `;
-export type GetProductDetailsQueryResponse = {
-  product: ProductWithReviewFragmentResponse;
-};
+export interface GetProductDetailsQueryResponse {
+  product: ProductWithReviewFragmentResponse
+}
 
 export const GetRecommendationsQuery = gql`
   ${RecommendationFragment}
@@ -63,9 +63,9 @@ export const GetRecommendationsQuery = gql`
     }
   }
 `;
-export type GetRecommendationsQueryResponse = {
-  recommendations: RecommendationFragmentResponse[];
-};
+export interface GetRecommendationsQueryResponse {
+  recommendations: RecommendationFragmentResponse[]
+}
 
 export const GetFeatureSectionsQuery = gql`
   ${FeatureSectionFragment}
@@ -76,6 +76,6 @@ export const GetFeatureSectionsQuery = gql`
     }
   }
 `;
-export type GetFeatureSectionsQueryResponse = {
-  features: FeatureSectionFragmentResponse[];
-};
+export interface GetFeatureSectionsQueryResponse {
+  features: FeatureSectionFragmentResponse[]
+}

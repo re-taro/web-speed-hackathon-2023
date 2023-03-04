@@ -3,15 +3,15 @@ import CanvasKitWasmUrl from 'canvaskit-wasm/bin/canvaskit.wasm?url';
 import classNames from 'classnames';
 import _ from 'lodash';
 import { memo, useEffect, useState } from 'react';
-import type { FC } from 'react';
 
-import type { ProductFragmentResponse } from '../../../graphql/fragments';
 import { Anchor } from '../../foundation/Anchor';
 import { AspectRatio } from '../../foundation/AspectRatio';
 import { DeviceType, GetDeviceType } from '../../foundation/GetDeviceType';
 import { WidthRestriction } from '../../foundation/WidthRestriction';
 
 import * as styles from './ProductHeroImage.styles';
+import type { ProductFragmentResponse } from '../../../graphql/fragments';
+import type { FC } from 'react';
 
 async function loadImageAsDataURL(url: string): Promise<string> {
   const CanvasKit = await CanvasKitInit({
@@ -20,7 +20,7 @@ async function loadImageAsDataURL(url: string): Promise<string> {
   });
 
   // 画像を読み込む
-  const data = await fetch(url).then((res) => res.arrayBuffer());
+  const data = await fetch(url).then(res => res.arrayBuffer());
   const image = CanvasKit.MakeImageFromEncoded(data);
   if (image == null) {
     // 読み込みに失敗したとき、透明な 1x1 GIF の Data URL を返却する
@@ -35,26 +35,25 @@ async function loadImageAsDataURL(url: string): Promise<string> {
   return canvas.toDataURL();
 }
 
-type Props = {
-  product: ProductFragmentResponse;
-  title: string;
-};
+interface Props {
+  product: ProductFragmentResponse
+  title: string
+}
 
 export const ProductHeroImage: FC<Props> = memo(({ product, title }) => {
-  const thumbnailFile = product.media.find((productMedia) => productMedia.isThumbnail)?.file;
+  const thumbnailFile = product.media.find(productMedia => productMedia.isThumbnail)?.file;
 
   const [imageDataUrl, setImageDataUrl] = useState<string>();
 
   useEffect(() => {
-    if (thumbnailFile == null) {
+    if (thumbnailFile == null)
       return;
-    }
-    loadImageAsDataURL(thumbnailFile.filename).then((dataUrl) => setImageDataUrl(dataUrl));
+
+    loadImageAsDataURL(thumbnailFile.filename).then(dataUrl => setImageDataUrl(dataUrl));
   }, [thumbnailFile]);
 
-  if (imageDataUrl === undefined) {
+  if (imageDataUrl === undefined)
     return null;
-  }
 
   return (
     <GetDeviceType>

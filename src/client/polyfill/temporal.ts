@@ -11,13 +11,12 @@ if (!('toTemporalInstant' in Date.prototype)) {
 }
 
 declare global {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+
   interface Window {
-    Temporal: typeof Temporal;
+    Temporal: typeof Temporal
   }
 
-  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   interface Date {
-    toTemporalInstant: typeof toTemporalInstant;
+    toTemporalInstant: typeof toTemporalInstant
   }
 }

@@ -5,9 +5,9 @@ import { Product } from './product';
 @Entity()
 export class Recommendation {
   @PrimaryGeneratedColumn()
-  id!: number;
+    id!: number;
 
   @OneToOne(() => Product)
   @JoinColumn()
-  product!: Relation<Product>;
+    product!: Relation<Product>;
 }

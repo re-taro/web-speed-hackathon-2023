@@ -1,6 +1,6 @@
 import { FeatureItem } from '../../model/feature_item';
-import type { FeatureSection } from '../../model/feature_section';
 import { dataSource } from '../data_source';
+import type { FeatureSection } from '../../model/feature_section';
 
 import type { GraphQLModelResolver } from './model_resolver';
 

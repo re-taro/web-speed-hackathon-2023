@@ -1,30 +1,30 @@
-import type { FormikErrors } from 'formik';
 import { useFormik } from 'formik';
 import _ from 'lodash';
-import type { FC } from 'react';
 import { memo } from 'react';
 import * as z from 'zod';
 
-import type { ReviewFragmentResponse } from '../../../graphql/fragments';
 import { PrimaryButton } from '../../foundation/PrimaryButton';
 import { TextArea } from '../../foundation/TextArea';
 import { ReviewList } from '../ReviewList';
 
 import * as styles from './ReviewSection.styles';
+import type { ReviewFragmentResponse } from '../../../graphql/fragments';
+import type { FC } from 'react';
+import type { FormikErrors } from 'formik';
 
 const LESS_THAN_64_LENGTH_REGEX = /^([\s\S\n]{0,8}){0,8}$/u;
 // NOTE: 改行含めて 64 文字以内であるかどうか確認する
 const commentSchema = z.string().regex(LESS_THAN_64_LENGTH_REGEX);
 
-type Props = {
-  reviews: ReviewFragmentResponse[] | undefined;
-  hasSignedIn: boolean;
-  onSubmitReview: (reviewForm: ReviewForm) => void;
-};
+interface Props {
+  reviews: ReviewFragmentResponse[] | undefined
+  hasSignedIn: boolean
+  onSubmitReview: (reviewForm: ReviewForm) => void
+}
 
-type ReviewForm = {
-  comment: string;
-};
+interface ReviewForm {
+  comment: string
+}
 
 export const ReviewSection: FC<Props> = memo(({ hasSignedIn, onSubmitReview, reviews }) => {
   const formik = useFormik<ReviewForm>({
@@ -37,9 +37,9 @@ export const ReviewSection: FC<Props> = memo(({ hasSignedIn, onSubmitReview, rev
     },
     validate(values) {
       const errors: FormikErrors<ReviewForm> = {};
-      if (values.comment != '' && !commentSchema.safeParse(values.comment).success) {
-        errors['comment'] = '64 文字以内でコメントしてください';
-      }
+      if (values.comment != '' && !commentSchema.safeParse(values.comment).success)
+        errors.comment = '64 文字以内でコメントしてください';
+
       return errors;
     },
     validateOnChange: true,

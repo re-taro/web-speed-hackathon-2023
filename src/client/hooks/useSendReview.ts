@@ -1,8 +1,8 @@
 import { useMutation } from '@apollo/client';
 import { useErrorHandler } from 'react-error-boundary';
 
-import type { SendReviewMutationResponse } from '../graphql/mutations';
 import { SendReviewMutation } from '../graphql/mutations';
+import type { SendReviewMutationResponse } from '../graphql/mutations';
 
 export const useSendReview = () => {
   const handleError = useErrorHandler();

@@ -1,27 +1,25 @@
 import * as currencyFormatter from 'currency-formatter';
 import _ from 'lodash';
-import type { FC } from 'react';
 import { memo } from 'react';
 
-import type { LimitedTimeOfferFragmentResponse, ProductFragmentResponse } from '../../../graphql/fragments';
 import { ProductOfferLabel } from '../ProductOfferLabel';
 
 import * as styles from './ProductOverview.styles';
+import type { LimitedTimeOfferFragmentResponse, ProductFragmentResponse } from '../../../graphql/fragments';
+import type { FC } from 'react';
 
-type Props = {
-  product: ProductFragmentResponse | undefined;
-  activeOffer: LimitedTimeOfferFragmentResponse | undefined;
-};
+interface Props {
+  product: ProductFragmentResponse | undefined
+  activeOffer: LimitedTimeOfferFragmentResponse | undefined
+}
 
 export const ProductOverview: FC<Props> = memo(({ activeOffer, product }) => {
-  if (product === undefined) {
+  if (product === undefined)
     return null;
-  }
 
   const renderActiveOffer = () => {
-    if (activeOffer === undefined) {
+    if (activeOffer === undefined)
       return;
-    }
 
     const endTime = window.Temporal.Instant.from(activeOffer.endDate).toLocaleString('ja-jp', {
       day: '2-digit',
@@ -48,11 +46,13 @@ export const ProductOverview: FC<Props> = memo(({ activeOffer, product }) => {
       <p className={styles.productDescription()}>{product.description}</p>
 
       <div className={styles.priceWrapper()}>
-        {activeOffer !== undefined ? (
-          <span className={styles.priceWithoutOffer()}>
-            {currencyFormatter.format(product.price, { code: 'JPY', precision: 0 })}
-          </span>
-        ) : null}
+        {activeOffer !== undefined
+          ? (
+            <span className={styles.priceWithoutOffer()}>
+              {currencyFormatter.format(product.price, { code: 'JPY', precision: 0 })}
+            </span>
+            )
+          : null}
         <span className={styles.price()}>
           {currencyFormatter.format(activeOffer?.price ?? product.price, { code: 'JPY', precision: 0 })}
         </span>

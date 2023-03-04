@@ -17,7 +17,7 @@ export const listWrapper = () => css`
   width: 100%;
 `;
 
-export const list = ({ slideIndex, visibleItemCount }: { slideIndex: number; visibleItemCount: number }) => css`
+export const list = ({ slideIndex, visibleItemCount }: { slideIndex: number, visibleItemCount: number }) => css`
   align-items: center;
   display: grid;
   grid-auto-columns: calc(100% / ${visibleItemCount});

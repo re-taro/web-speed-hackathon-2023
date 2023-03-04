@@ -4,17 +4,18 @@ import { koaMiddleware } from '@as-integrations/koa';
 import gracefulShutdown from 'http-graceful-shutdown';
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
+import compress from 'koa-compress';
 import logger from 'koa-logger';
 import route from 'koa-route';
 import send from 'koa-send';
 import session from 'koa-session';
 import serve from 'koa-static';
 
-import type { Context } from './context';
 import { dataSource } from './data_source';
 import { initializeApolloServer } from './graphql';
 import { initializeDatabase } from './utils/initialize_database';
 import { rootResolve } from './utils/root_resolve';
+import type { Context } from './context';
 
 const PORT = Number(process.env.PORT ?? 8080);
 
@@ -28,9 +29,14 @@ async function init(): Promise<void> {
   app.keys = ['cookie-key'];
   app.use(logger());
   app.use(bodyParser());
+  app.use(
+    compress({
+      br: false,
+    }),
+  );
   app.use(session({}, app));
 
-  app.use(async (ctx, next) => {
+  app.use(async(ctx, next) => {
     ctx.set('Cache-Control', 'no-store');
     await next();
   });
@@ -42,7 +48,7 @@ async function init(): Promise<void> {
     route.all(
       '/graphql',
       koaMiddleware(apolloServer, {
-        context: async ({ ctx }) => {
+        context: async({ ctx }) => {
           return { session: ctx.session } as Context;
         },
       }),
@@ -50,16 +56,27 @@ async function init(): Promise<void> {
   );
 
   app.use(
-    route.post('/initialize', async (ctx) => {
+    route.post('/initialize', async(ctx) => {
       await initializeDatabase();
       ctx.status = 204;
     }),
   );
 
-  app.use(serve(rootResolve('dist')));
-  app.use(serve(rootResolve('public')));
+  app.use(
+    serve(rootResolve('dist/public'), {
+      brotli: true,
+      gzip: true,
+      setHeaders: (res, path) => {
+        if (path.includes('public/assets/')) {
+          res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+          return;
+        }
+        res.setHeader('Cache-Control', 'public, no-cache');
+      },
+    }),
+  );
 
-  app.use(async (ctx) => await send(ctx, rootResolve('/dist/index.html')));
+  app.use(async ctx => await send(ctx, rootResolve('/dist/public/index.html')));
 
   httpServer.listen({ port: PORT }, () => {
     console.log(`🚀 Server ready at http://localhost:${PORT}`);

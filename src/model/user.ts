@@ -8,20 +8,20 @@ import { Review } from './review';
 @Unique(['email'])
 export class User {
   @PrimaryGeneratedColumn()
-  id!: number;
+    id!: number;
 
   @Column()
-  email!: string;
+    email!: string;
 
   @Column()
-  password!: string;
+    password!: string;
 
-  @OneToOne(() => Profile, (profile) => profile.user)
-  profile!: Relation<Profile>;
+  @OneToOne(() => Profile, profile => profile.user)
+    profile!: Relation<Profile>;
 
-  @OneToMany(() => Review, (review) => review.user)
-  reviews!: Relation<Review[]>;
+  @OneToMany(() => Review, review => review.user)
+    reviews!: Relation<Review[]>;
 
-  @OneToMany(() => Order, (item) => item.user)
-  orders!: Relation<Order[]>;
+  @OneToMany(() => Order, item => item.user)
+    orders!: Relation<Order[]>;
 }

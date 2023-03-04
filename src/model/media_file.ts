@@ -4,8 +4,8 @@ import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 @Unique(['filename'])
 export class MediaFile {
   @PrimaryGeneratedColumn()
-  id!: number;
+    id!: number;
 
   @Column()
-  filename!: string;
+    filename!: string;
 }

@@ -43,7 +43,7 @@ export const ProductMediaFragment = gql`
   }
 `;
 export type ProductMediaFragmentResponse = Pick<ProductMedia, 'id' | 'isThumbnail'> & {
-  file: MediaFileFragmentResponse;
+  file: MediaFileFragmentResponse
 };
 
 export const ProductFragment = gql`
@@ -64,8 +64,8 @@ export const ProductFragment = gql`
   }
 `;
 export type ProductFragmentResponse = Pick<Product, 'id' | 'name' | 'price' | 'description'> & {
-  media: ProductMediaFragmentResponse[];
-  offers: LimitedTimeOfferFragmentResponse[];
+  media: ProductMediaFragmentResponse[]
+  offers: LimitedTimeOfferFragmentResponse[]
 };
 
 export const ProfileFragment = gql`
@@ -80,7 +80,7 @@ export const ProfileFragment = gql`
   }
 `;
 export type ProfileFragmentResponse = Pick<Profile, 'id' | 'name'> & {
-  avatar: MediaFileFragmentResponse;
+  avatar: MediaFileFragmentResponse
 };
 
 export const UserFragment = gql`
@@ -95,7 +95,7 @@ export const UserFragment = gql`
   }
 `;
 export type UserFragmentResponse = Pick<User, 'id' | 'email'> & {
-  profile: ProfileFragmentResponse;
+  profile: ProfileFragmentResponse
 };
 
 export const ReviewFragment = gql`
@@ -111,7 +111,7 @@ export const ReviewFragment = gql`
   }
 `;
 export type ReviewFragmentResponse = Pick<Review, 'id' | 'postedAt' | 'comment'> & {
-  user: UserFragmentResponse;
+  user: UserFragmentResponse
 };
 
 export const ProductReviewFragment = gql`
@@ -123,9 +123,9 @@ export const ProductReviewFragment = gql`
     }
   }
 `;
-export type ProductReviewFragmentResponse = {
-  reviews: ReviewFragmentResponse[];
-};
+export interface ProductReviewFragmentResponse {
+  reviews: ReviewFragmentResponse[]
+}
 
 export const ProductWithReviewFragment = gql`
   ${ProductFragment}
@@ -139,7 +139,7 @@ export const ProductWithReviewFragment = gql`
   }
 `;
 export type ProductWithReviewFragmentResponse = ProductFragmentResponse & {
-  reviews: ReviewFragmentResponse[];
+  reviews: ReviewFragmentResponse[]
 };
 
 export const RecommendationFragment = gql`
@@ -153,7 +153,7 @@ export const RecommendationFragment = gql`
   }
 `;
 export type RecommendationFragmentResponse = Pick<Recommendation, 'id'> & {
-  product: ProductFragmentResponse;
+  product: ProductFragmentResponse
 };
 
 export const ShoppingCartItemFragment = gql`
@@ -168,7 +168,7 @@ export const ShoppingCartItemFragment = gql`
   }
 `;
 export type ShoppingCartItemFragmentResponse = Pick<ShoppingCartItem, 'id' | 'amount'> & {
-  product: ProductWithReviewFragmentResponse;
+  product: ProductWithReviewFragmentResponse
 };
 
 export const OrderFragment = gql`
@@ -185,7 +185,7 @@ export const OrderFragment = gql`
   }
 `;
 export type OrderFragmentResponse = Pick<Order, 'id' | 'zipCode' | 'address' | 'isOrdered'> & {
-  items: ShoppingCartItemFragmentResponse[];
+  items: ShoppingCartItemFragmentResponse[]
 };
 
 export const AuthUserFragment = gql`
@@ -204,8 +204,8 @@ export const AuthUserFragment = gql`
   }
 `;
 export type AuthUserFragmentResponse = UserFragmentResponse & {
-  reviews: ReviewFragmentResponse[];
-  orders: OrderFragmentResponse[];
+  reviews: ReviewFragmentResponse[]
+  orders: OrderFragmentResponse[]
 };
 
 export const FeatureItemFragment = gql`
@@ -219,7 +219,7 @@ export const FeatureItemFragment = gql`
   }
 `;
 export type FeatureItemFragmentResponse = Pick<FeatureItem, 'id'> & {
-  product: ProductFragmentResponse;
+  product: ProductFragmentResponse
 };
 
 export const FeatureSectionFragment = gql`
@@ -234,5 +234,5 @@ export const FeatureSectionFragment = gql`
   }
 `;
 export type FeatureSectionFragmentResponse = Pick<FeatureSection, 'id' | 'title'> & {
-  items: FeatureItemFragmentResponse[];
+  items: FeatureItemFragmentResponse[]
 };

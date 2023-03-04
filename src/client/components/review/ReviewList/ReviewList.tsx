@@ -1,19 +1,18 @@
-import type { FC } from 'react';
 
-import type { ReviewFragmentResponse } from '../../../graphql/fragments';
 import { AspectRatio } from '../../foundation/AspectRatio';
 import { Image } from '../../foundation/Image';
 
 import * as styles from './ReviewList.styles';
+import type { ReviewFragmentResponse } from '../../../graphql/fragments';
+import type { FC } from 'react';
 
-type Props = {
-  reviews: ReviewFragmentResponse[];
-};
+interface Props {
+  reviews: ReviewFragmentResponse[]
+}
 
 export const ReviewList: FC<Props> = ({ reviews }) => {
-  if (reviews.length === 0) {
+  if (reviews.length === 0)
     return null;
-  }
 
   return (
     <ul className={styles.itemList()}>

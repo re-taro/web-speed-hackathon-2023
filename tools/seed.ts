@@ -113,18 +113,17 @@ function chunk<T>(array: T[], size: number): T[][] {
   let resIndex = 0;
   const result = new Array(Math.ceil(length / size));
 
-  while (index < length) {
+  while (index < length)
     result[resIndex++] = array.slice(index, (index += size));
-  }
+
   return result;
 }
 
 async function insert(entities: unknown[]): Promise<void> {
   const partitions = chunk(entities, 5000);
 
-  for (const partition of partitions) {
+  for (const partition of partitions)
     await dataSource.manager.save(partition);
-  }
 }
 
 async function seedMediaFiles(): Promise<MediaFile[]> {
@@ -134,7 +133,7 @@ async function seedMediaFiles(): Promise<MediaFile[]> {
   const files = (await Promise.all([await getFileList(imageDir), await getFileList(videoDir)])).flat();
   const filenames = files.map((file) => {
     const relativePath = path.relative(publicDir, file);
-    return '/' + relativePath;
+    return `/${relativePath}`;
   });
   const mediaList: MediaFile[] = [];
 
@@ -152,7 +151,7 @@ async function seedMediaFiles(): Promise<MediaFile[]> {
 async function seedUsers({ mediaList }: { mediaList: MediaFile[] }): Promise<User[]> {
   let index = 1;
 
-  const avatars = mediaList.filter((m) => m.filename.includes('/avatars/'));
+  const avatars = mediaList.filter(m => m.filename.includes('/avatars/'));
   const users: User[] = [];
   const profiles: Profile[] = [];
 
@@ -192,10 +191,10 @@ async function seedProducts({ mediaList }: { mediaList: MediaFile[] }): Promise<
   for (const familyName of familyNames) {
     for (const farmName of farmNames) {
       for (const vegetableFruitName of vegetableFruitNames) {
-        const vegetableFruitImages = mediaList.filter((m) =>
+        const vegetableFruitImages = mediaList.filter(m =>
           m.filename.includes(`/products/${vegetableFruitName.name}/`),
         );
-        const videos = mediaList.filter((m) => m.filename.includes('/videos/'));
+        const videos = mediaList.filter(m => m.filename.includes('/videos/'));
 
         const productMediaList: ProductMedia[] = [];
 
@@ -285,16 +284,15 @@ async function seedFeatureSections({ products }: { products: Product[] }): Promi
   }
 }
 
-async function seedReviews({ products, users }: { users: User[]; products: Product[] }): Promise<void> {
+async function seedReviews({ products, users }: { users: User[], products: Product[] }): Promise<void> {
   const reviews: Review[] = [];
 
   for (let userIndex = 0; userIndex < users.length; userIndex++) {
     for (let productIndex = 0; productIndex < products.length; productIndex++) {
       const isTarget = productIndex % 2 === userIndex % 2 && productIndex % userIndex === 0;
 
-      if (!isTarget) {
+      if (!isTarget)
         continue;
-      }
 
       const review = new Review();
       review.comment = comments[(userIndex + productIndex) % comments.length];
@@ -321,7 +319,7 @@ async function seedReviews({ products, users }: { users: User[]; products: Produ
   await insert(reviews);
 }
 
-async function seedOrders({ products, users }: { users: User[]; products: Product[] }): Promise<void> {
+async function seedOrders({ products, users }: { users: User[], products: Product[] }): Promise<void> {
   const productsChunks = chunk(products, Math.floor(products.length / users.length));
 
   for (const [idx, user] of users.entries()) {

@@ -1,28 +1,27 @@
 import _ from 'lodash';
-import type { FC } from 'react';
 import { memo } from 'react';
 
-import type { ProductFragmentResponse } from '../../../graphql/fragments';
 import { Icon } from '../../foundation/Icon';
 import { OutlineButton } from '../../foundation/OutlineButton';
 import { PrimaryAnchor } from '../../foundation/PrimaryAnchor';
 import { PrimaryButton } from '../../foundation/PrimaryButton';
 
 import * as styles from './ProductPurchaseSection.styles';
+import type { ProductFragmentResponse } from '../../../graphql/fragments';
+import type { FC } from 'react';
 
-type Props = {
-  product: ProductFragmentResponse | undefined;
-  amountInCart: number;
-  isAuthUser: boolean;
-  onUpdateCartItem: (productId: number, count: number) => void;
-  onOpenSignInModal: () => void;
-};
+interface Props {
+  product: ProductFragmentResponse | undefined
+  amountInCart: number
+  isAuthUser: boolean
+  onUpdateCartItem: (productId: number, count: number) => void
+  onOpenSignInModal: () => void
+}
 
 export const ProductPurchaseSection: FC<Props> = memo(
   ({ amountInCart, isAuthUser, onOpenSignInModal, onUpdateCartItem, product }) => {
-    if (product === undefined) {
+    if (product === undefined)
       return null;
-    }
 
     if (!isAuthUser) {
       return (

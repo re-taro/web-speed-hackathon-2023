@@ -1,4 +1,3 @@
-import type { FC } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,6 +11,7 @@ import { useSubmitOrder } from '../../hooks/useSubmitOrder';
 import { useUpdateCartItem } from '../../hooks/useUpdateCartItems';
 
 import * as styles from './Order.styles';
+import type { FC } from 'react';
 
 export const Order: FC = () => {
   const navigate = useNavigate();
@@ -21,9 +21,9 @@ export const Order: FC = () => {
   const { submitOrder } = useSubmitOrder();
   const { order } = useOrder();
 
-  if (authUserLoading) {
+  if (authUserLoading)
     return null;
-  }
+
   if (!isAuthUser) {
     navigate('/');
     return null;

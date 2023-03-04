@@ -3,7 +3,6 @@ import fs from 'node:fs/promises';
 import { ApolloServer } from '@apollo/server';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 
-import type { Context } from '../context';
 import { rootResolve } from '../utils/root_resolve';
 
 import { featureItemResolver } from './feature_item_resolver';
@@ -18,6 +17,7 @@ import { recommendationResolver } from './recommendation_resolver';
 import { reviewResolver } from './review_resolver';
 import { shoppingCartItemResolver } from './shopping_cart_item_resolver';
 import { userResolver } from './user_resolver';
+import type { Context } from '../context';
 
 export async function initializeApolloServer(): Promise<ApolloServer<Context>> {
   const typeDefs = await Promise.all(
@@ -36,7 +36,7 @@ export async function initializeApolloServer(): Promise<ApolloServer<Context>> {
       rootResolve('./src/model/user.graphql'),
       rootResolve('./src/server/graphql/mutation.graphql'),
       rootResolve('./src/server/graphql/query.graphql'),
-    ].map((filepath) => fs.readFile(filepath, { encoding: 'utf-8' })),
+    ].map(filepath => fs.readFile(filepath, { encoding: 'utf-8' })),
   );
 
   const server = new ApolloServer({

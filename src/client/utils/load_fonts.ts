@@ -1,8 +1,8 @@
-type FontFaceSource = {
-  family: string;
-  source: string;
-  descripter: FontFaceDescriptors;
-};
+interface FontFaceSource {
+  family: string
+  source: string
+  descripter: FontFaceDescriptors
+}
 
 const FONT_FACE_SOURCES: FontFaceSource[] = [
   {
@@ -34,7 +34,6 @@ export async function loadFonts() {
     fonts.push(font);
   }
 
-  for (const font of fontFaces) {
+  for (const font of fontFaces)
     document.fonts.add(font);
-  }
 }

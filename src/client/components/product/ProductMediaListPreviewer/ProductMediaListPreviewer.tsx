@@ -1,24 +1,23 @@
 import classNames from 'classnames';
-import type { FC } from 'react';
 import { useState } from 'react';
 
-import type { ProductFragmentResponse } from '../../../graphql/fragments';
 import { AspectRatio } from '../../foundation/AspectRatio';
 
 import { MediaItem } from './MediaItem';
 import { MediaItemPreviewer } from './MediaItemPreviewer';
 import * as styles from './ProductMediaListPreviewer.styles';
+import type { ProductFragmentResponse } from '../../../graphql/fragments';
+import type { FC } from 'react';
 
-type Props = {
-  product: ProductFragmentResponse | undefined;
-};
+interface Props {
+  product: ProductFragmentResponse | undefined
+}
 
 export const ProductMediaListPreviewer: FC<Props> = ({ product }) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
-  if (product === undefined || product.media.length === 0) {
+  if (product === undefined || product.media.length === 0)
     return null;
-  }
 
   return (
     <div className={styles.container()}>

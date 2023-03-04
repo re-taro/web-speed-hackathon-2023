@@ -6,11 +6,11 @@ import { Product } from './product';
 @Entity()
 export class FeatureItem {
   @PrimaryGeneratedColumn()
-  id!: number;
+    id!: number;
 
   @ManyToOne(() => FeatureSection)
-  section!: Relation<FeatureSection>;
+    section!: Relation<FeatureSection>;
 
   @ManyToOne(() => Product)
-  product!: Relation<Product>;
+    product!: Relation<Product>;
 }

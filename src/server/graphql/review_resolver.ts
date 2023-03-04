@@ -4,7 +4,7 @@ import { dataSource } from '../data_source';
 import type { GraphQLModelResolver } from './model_resolver';
 
 export const reviewResolver: GraphQLModelResolver<Review> = {
-  product: async (parent) => {
+  product: async(parent) => {
     const review = await dataSource.manager.findOneOrFail(Review, {
       relations: {
         product: true,
@@ -14,7 +14,7 @@ export const reviewResolver: GraphQLModelResolver<Review> = {
 
     return review.product;
   },
-  user: async (parent) => {
+  user: async(parent) => {
     const review = await dataSource.manager.findOneOrFail(Review, {
       relations: {
         user: true,

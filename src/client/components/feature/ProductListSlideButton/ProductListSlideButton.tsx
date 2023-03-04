@@ -1,9 +1,9 @@
 import classNames from 'classnames';
-import type { FC } from 'react';
 
 import { Icon } from '../../foundation/Icon';
 
 import * as styles from './ProductListSlideButton.styles';
+import type { FC } from 'react';
 
 export const ArrowType = {
   LEFT: 'LEFT',
@@ -11,11 +11,11 @@ export const ArrowType = {
 } as const;
 export type ArrowType = typeof ArrowType[keyof typeof ArrowType];
 
-type Props = {
-  arrowType: ArrowType;
-  disabled: boolean;
-  onClick: () => void;
-};
+interface Props {
+  arrowType: ArrowType
+  disabled: boolean
+  onClick: () => void
+}
 
 export const ProductListSlideButton: FC<Props> = ({ arrowType, disabled, onClick }) => {
   return (
@@ -26,11 +26,13 @@ export const ProductListSlideButton: FC<Props> = ({ arrowType, disabled, onClick
       disabled={disabled}
       onClick={onClick}
     >
-      {arrowType === ArrowType.LEFT ? (
-        <Icon color="#222222" height={16} type="FaArrowLeft" width={16} />
-      ) : (
-        <Icon color="#222222" height={16} type="FaArrowRight" width={16} />
-      )}
+      {arrowType === ArrowType.LEFT
+        ? (
+          <Icon color="#222222" height={16} type="FaArrowLeft" width={16} />
+          )
+        : (
+          <Icon color="#222222" height={16} type="FaArrowRight" width={16} />
+          )}
     </button>
   );
 };

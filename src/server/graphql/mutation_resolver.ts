@@ -1,45 +1,44 @@
 import { Temporal } from '@js-temporal/polyfill';
 import * as bcrypt from 'bcrypt';
-import type { GraphQLFieldResolver } from 'graphql';
 
 import { Order } from '../../model/order';
 import { Profile } from '../../model/profile';
 import { Review } from '../../model/review';
 import { ShoppingCartItem } from '../../model/shopping_cart_item';
 import { User } from '../../model/user';
-import type { Context } from '../context';
 import { dataSource } from '../data_source';
+import type { Context } from '../context';
+import type { GraphQLFieldResolver } from 'graphql';
 
-type MutationResolver = {
-  signin: GraphQLFieldResolver<unknown, Context, { email: string; password: string }, Promise<boolean>>;
-  signup: GraphQLFieldResolver<unknown, Context, { email: string; name: string; password: string }, Promise<boolean>>;
-  sendReview: GraphQLFieldResolver<unknown, Context, { productId: number; comment: string }, Promise<boolean>>;
+interface MutationResolver {
+  signin: GraphQLFieldResolver<unknown, Context, { email: string, password: string }, Promise<boolean>>
+  signup: GraphQLFieldResolver<unknown, Context, { email: string, name: string, password: string }, Promise<boolean>>
+  sendReview: GraphQLFieldResolver<unknown, Context, { productId: number, comment: string }, Promise<boolean>>
   updateItemInShoppingCart: GraphQLFieldResolver<
-    unknown,
-    Context,
-    { productId: number; amount: number },
-    Promise<boolean>
-  >;
+  unknown,
+  Context,
+  { productId: number, amount: number },
+  Promise<boolean>
+  >
   orderItemsInShoppingCart: GraphQLFieldResolver<
-    unknown,
-    Context,
-    { zipCode: string; address: string },
-    Promise<boolean>
-  >;
-};
+  unknown,
+  Context,
+  { zipCode: string, address: string },
+  Promise<boolean>
+  >
+}
 
 export const mutationResolver: MutationResolver = {
-  orderItemsInShoppingCart: async (_parent, args, { session }) => {
-    if (session['userId'] == null) {
+  orderItemsInShoppingCart: async(_parent, args, { session }) => {
+    if (session.userId == null)
       throw new Error('Authentication required.');
-    }
 
     await dataSource.manager.update(
       Order,
       {
         isOrdered: false,
         user: {
-          id: session['userId'],
+          id: session.userId,
         },
       },
       {
@@ -51,10 +50,9 @@ export const mutationResolver: MutationResolver = {
 
     return true;
   },
-  sendReview: async (_parent, args, { session }) => {
-    if (session['userId'] == null) {
+  sendReview: async(_parent, args, { session }) => {
+    if (session.userId == null)
       throw new Error('Authentication required.');
-    }
 
     const postedAt = Temporal.Now.instant().toString({ timeZone: Temporal.TimeZone.from('UTC') });
 
@@ -66,28 +64,27 @@ export const mutationResolver: MutationResolver = {
           id: args.productId,
         },
         user: {
-          id: session['userId'],
+          id: session.userId,
         },
       }),
     );
 
     return true;
   },
-  signin: async (_parent: unknown, args, { session }) => {
+  signin: async(_parent: unknown, args, { session }) => {
     const user = await dataSource.manager.findOneOrFail(User, {
       where: {
         email: args.email,
       },
     });
 
-    if ((await bcrypt.compare(args.password, user.password)) !== true) {
+    if ((await bcrypt.compare(args.password, user.password)) !== true)
       throw new Error('Auth error.');
-    }
 
-    session['userId'] = user.id;
+    session.userId = user.id;
     return true;
   },
-  signup: async (_parent, args, { session }) => {
+  signup: async(_parent, args, { session }) => {
     const user = await dataSource.manager.save(
       dataSource.manager.create(User, {
         email: args.email,
@@ -101,20 +98,19 @@ export const mutationResolver: MutationResolver = {
         user,
       }),
     );
-    session['userId'] = user.id;
+    session.userId = user.id;
     return true;
   },
-  updateItemInShoppingCart: async (_parent, args, { session }) => {
-    if (session['userId'] == null) {
+  updateItemInShoppingCart: async(_parent, args, { session }) => {
+    if (session.userId == null)
       throw new Error('Authentication required.');
-    }
 
     const order = await dataSource.manager
       .findOneOrFail(Order, {
         where: {
           isOrdered: false,
           user: {
-            id: session['userId'],
+            id: session.userId,
           },
         },
       })
@@ -125,7 +121,7 @@ export const mutationResolver: MutationResolver = {
             isOrdered: false,
             items: [],
             user: {
-              id: session['userId'],
+              id: session.userId,
             },
             zipCode: '',
           }),

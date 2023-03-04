@@ -7,23 +7,23 @@ import { Review } from './review';
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn()
-  id!: number;
+    id!: number;
 
   @Column()
-  name!: string;
+    name!: string;
 
   @Column()
-  price!: number;
+    price!: number;
 
   @Column()
-  description!: string;
+    description!: string;
 
-  @OneToMany(() => ProductMedia, (media) => media.product)
-  media!: Relation<ProductMedia[]>;
+  @OneToMany(() => ProductMedia, media => media.product)
+    media!: Relation<ProductMedia[]>;
 
-  @OneToMany(() => LimitedTimeOffer, (offer) => offer.product)
-  offers!: Relation<LimitedTimeOffer[]>;
+  @OneToMany(() => LimitedTimeOffer, offer => offer.product)
+    offers!: Relation<LimitedTimeOffer[]>;
 
-  @OneToMany(() => Review, (review) => review.product)
-  reviews!: Relation<Review[]>;
+  @OneToMany(() => Review, review => review.product)
+    reviews!: Relation<Review[]>;
 }

@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +14,7 @@ import { useRecommendation } from '../../hooks/useRecommendation';
 import { loadFonts } from '../../utils/load_fonts';
 
 import * as styles from './OrderComplete.styles';
+import type { FC } from 'react';
 
 export const OrderComplete: FC = () => {
   const navigate = useNavigate();
@@ -28,9 +28,9 @@ export const OrderComplete: FC = () => {
     });
   }, []);
 
-  if (!recommendation || !isReadyFont || authUserLoading) {
+  if (!recommendation || !isReadyFont || authUserLoading)
     return null;
-  }
+
   if (!isAuthUser) {
     navigate('/');
     return null;

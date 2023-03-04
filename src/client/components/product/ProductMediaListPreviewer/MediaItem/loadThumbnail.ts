@@ -1,4 +1,4 @@
-export const loadThumbnail = async (url: string) => {
+export const loadThumbnail = async(url: string) => {
   const video = document.createElement('video');
 
   await new Promise((resolve) => {
@@ -11,9 +11,8 @@ export const loadThumbnail = async (url: string) => {
 
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
-  if (context === null) {
+  if (context === null)
     return;
-  }
 
   video.currentTime = 0;
   context.drawImage(video, 0, 0, canvas.width, canvas.height);

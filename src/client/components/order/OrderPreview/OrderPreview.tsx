@@ -1,19 +1,19 @@
 import * as currencyFormatter from 'currency-formatter';
 import _ from 'lodash';
-import type { FC } from 'react';
 import { memo } from 'react';
 
-import type { OrderFragmentResponse } from '../../../graphql/fragments';
 import { useTotalPrice } from '../../../hooks/useTotalPrice';
 import { CartItem } from '../CartItem';
 
 import * as styles from './OrderPreview.styles';
+import type { OrderFragmentResponse } from '../../../graphql/fragments';
+import type { FC } from 'react';
 
-type Props = {
-  order: OrderFragmentResponse;
-  onUpdateCartItem: (productId: number, amount: number) => void;
-  onRemoveCartItem: (productId: number) => void;
-};
+interface Props {
+  order: OrderFragmentResponse
+  onUpdateCartItem: (productId: number, amount: number) => void
+  onRemoveCartItem: (productId: number) => void
+}
 
 export const OrderPreview: FC<Props> = memo(({ onRemoveCartItem, onUpdateCartItem, order }) => {
   const { totalPrice } = useTotalPrice(order);
