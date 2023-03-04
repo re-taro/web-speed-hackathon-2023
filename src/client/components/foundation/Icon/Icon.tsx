@@ -1,8 +1,17 @@
 import classNames from 'classnames';
-import * as Icons from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight, FaCheckCircle, FaPlay, FaShoppingCart, FaUser } from 'react-icons/fa';
 
 import * as styles from './Icon.styles';
 import type { FC } from 'react';
+
+const Icons = {
+  FaArrowLeft,
+  FaArrowRight,
+  FaShoppingCart,
+  FaUser,
+  FaPlay,
+  FaCheckCircle,
+} as const;
 
 interface Props {
   type: keyof typeof Icons
@@ -12,7 +21,6 @@ interface Props {
 }
 
 export const Icon: FC<Props> = ({ color, height, type, width }) => {
-  // eslint-disable-next-line import/namespace
   const Icon = Icons[type];
   return (
     <span className={classNames(type, styles.container({ color, height, width }))}>
