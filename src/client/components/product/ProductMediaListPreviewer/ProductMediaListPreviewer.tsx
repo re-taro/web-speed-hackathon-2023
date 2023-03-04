@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import { useState } from 'react';
 
-import { AspectRatio } from '../../foundation/AspectRatio';
+import { AspectRatio } from '../../foundation/AspectRatio/AspectRatio';
 
-import { MediaItem } from './MediaItem';
-import { MediaItemPreviewer } from './MediaItemPreviewer';
+import { MediaItem } from './MediaItem/MediaItem';
+import { MediaItemPreviewer } from './MediaItemPreviewer/MediaItemPreviewer';
 import * as styles from './ProductMediaListPreviewer.styles';
 import type { ProductFragmentResponse } from '../../../graphql/fragments';
 import type { FC } from 'react';

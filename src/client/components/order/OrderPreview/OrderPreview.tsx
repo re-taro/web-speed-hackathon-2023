@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { memo } from 'react';
 
 import { useTotalPrice } from '../../../hooks/useTotalPrice';
-import { CartItem } from '../CartItem';
+import { CartItem } from '../CartItem/CartItem';
 
 import * as styles from './OrderPreview.styles';
 import type { OrderFragmentResponse } from '../../../graphql/fragments';

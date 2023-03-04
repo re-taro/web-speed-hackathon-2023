@@ -2,8 +2,8 @@ import { useFormik } from 'formik';
 import _ from 'lodash';
 import { useEffect } from 'react';
 
-import { PrimaryButton } from '../../foundation/PrimaryButton';
-import { TextInput } from '../../foundation/TextInput';
+import { PrimaryButton } from '../../foundation/PrimaryButton/PrimaryButton';
+import { TextInput } from '../../foundation/TextInput/TextInput';
 
 import * as styles from './OrderForm.styles';
 import type { FC } from 'react';
@@ -32,10 +32,8 @@ export const OrderForm: FC<Props> = ({ onSubmit }) => {
 
   useEffect(() => {
     let isCurrent = true;
-
     (async() => {
       const { default: zipcodeJa } = await import('zipcode-ja');
-
       if (isCurrent) {
         const zipCode = formik.values.zipCode;
         const address = [...(_.cloneDeep(zipcodeJa[zipCode])?.address ?? [])];

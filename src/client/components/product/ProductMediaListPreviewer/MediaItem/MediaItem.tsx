@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import { getMediaType } from '../../../../utils/get_media_type';
-import { Icon } from '../../../foundation/Icon';
-import { Image } from '../../../foundation/Image';
+import { Icon } from '../../../foundation/Icon/Icon';
+import { Image } from '../../../foundation/Image/Image';
 
 import * as styles from './MediaItem.styles';
 import { loadThumbnail } from './loadThumbnail';

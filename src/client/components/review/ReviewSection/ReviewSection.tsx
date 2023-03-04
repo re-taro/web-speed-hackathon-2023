@@ -3,9 +3,9 @@ import _ from 'lodash';
 import { memo } from 'react';
 import * as z from 'zod';
 
-import { PrimaryButton } from '../../foundation/PrimaryButton';
-import { TextArea } from '../../foundation/TextArea';
-import { ReviewList } from '../ReviewList';
+import { PrimaryButton } from '../../foundation/PrimaryButton/PrimaryButton';
+import { TextArea } from '../../foundation/TextArea/TextArea';
+import { ReviewList } from '../ReviewList/ReviewList';
 
 import * as styles from './ReviewSection.styles';
 import type { ReviewFragmentResponse } from '../../../graphql/fragments';
@@ -37,7 +37,7 @@ export const ReviewSection: FC<Props> = memo(({ hasSignedIn, onSubmitReview, rev
     },
     validate(values) {
       const errors: FormikErrors<ReviewForm> = {};
-      if (values.comment != '' && !commentSchema.safeParse(values.comment).success)
+      if (values.comment !== '' && !commentSchema.safeParse(values.comment).success)
         errors.comment = '64 文字以内でコメントしてください';
 
       return errors;

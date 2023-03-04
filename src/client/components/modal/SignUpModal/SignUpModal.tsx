@@ -3,10 +3,10 @@ import { useState } from 'react';
 import * as z from 'zod';
 
 import { useSignUp } from '../../../hooks/useSignUp';
-import { useCloseModal, useIsOpenModal, useOpenModal } from '../../../store/modal';
-import { Modal } from '../../foundation/Modal';
-import { PrimaryButton } from '../../foundation/PrimaryButton';
-import { TextInput } from '../../foundation/TextInput';
+import { useCloseModal, useIsOpenModal, useOpenModal } from '../../../store/modal/hooks';
+import { Modal } from '../../foundation/Modal/Modal';
+import { PrimaryButton } from '../../foundation/PrimaryButton/PrimaryButton';
+import { TextInput } from '../../foundation/TextInput/TextInput';
 
 import * as styles from './SignUpModal.styles';
 import type { FC } from 'react';
@@ -29,10 +29,8 @@ export interface SignUpForm {
 export const SignUpModal: FC = () => {
   const isOpened = useIsOpenModal('SIGN_UP');
   const { signUp } = useSignUp();
-
   const handleOpenModal = useOpenModal();
   const handleCloseModal = useCloseModal();
-
   const [submitError, setSubmitError] = useState<Error | null>(null);
   const formik = useFormik<SignUpForm>({
     initialValues: {
@@ -58,10 +56,9 @@ export const SignUpModal: FC = () => {
     },
     validate(values) {
       const errors: FormikErrors<SignUpForm> = {};
-      if (values.email != '' && !emailSchema.safeParse(values.email).success)
+      if (values.email !== '' && !emailSchema.safeParse(values.email).success)
         errors.email = 'メールアドレスの形式が間違っています';
-
-      if (values.password != '' && !passwordSchema.safeParse(values.password).success)
+      if (values.password !== '' && !passwordSchema.safeParse(values.password).success)
         errors.password = '英数字以外の文字を含めてください';
 
       return errors;

@@ -3,12 +3,12 @@ import * as currencyFormatter from 'currency-formatter';
 
 import { useActiveOffer } from '../../../hooks/useActiveOffer';
 import { normalizeCartItemCount } from '../../../utils/normalize_cart_item';
-import { Anchor } from '../../foundation/Anchor';
-import { AspectRatio } from '../../foundation/AspectRatio';
-import { DeviceType, GetDeviceType } from '../../foundation/GetDeviceType';
-import { Image } from '../../foundation/Image';
-import { OutlineButton } from '../../foundation/OutlineButton';
-import { ProductOfferLabel } from '../../product/ProductOfferLabel';
+import { Anchor } from '../../foundation/Anchor/Anchor';
+import { AspectRatio } from '../../foundation/AspectRatio/AspectRatio';
+import { DeviceT, GetDeviceType } from '../../foundation/GetDeviceType/GetDeviceType';
+import { Image } from '../../foundation/Image/Image';
+import { OutlineButton } from '../../foundation/OutlineButton/OutlineButton';
+import { ProductOfferLabel } from '../../product/ProductOfferLabel/ProductOfferLabel';
 
 import * as styles from './CartItem.styles';
 import type { ShoppingCartItemFragmentResponse } from '../../../graphql/fragments';
@@ -36,8 +36,8 @@ export const CartItem: FC<Props> = ({ item, onRemove, onUpdate }) => {
         return (
           <div
             className={classNames(styles.container(), {
-              [styles.container__desktop()]: deviceType === DeviceType.DESKTOP,
-              [styles.container__mobile()]: deviceType === DeviceType.MOBILE,
+              [styles.container__desktop()]: deviceType === DeviceT.DESKTOP,
+              [styles.container__mobile()]: deviceType === DeviceT.MOBILE,
             })}
           >
             <div className={styles.item()}>
@@ -47,8 +47,8 @@ export const CartItem: FC<Props> = ({ item, onRemove, onUpdate }) => {
                     ? (
                       <div
                         className={classNames(styles.thumbnail(), {
-                          [styles.thumbnail__desktop()]: deviceType === DeviceType.DESKTOP,
-                          [styles.thumbnail__mobile()]: deviceType === DeviceType.MOBILE,
+                          [styles.thumbnail__desktop()]: deviceType === DeviceT.DESKTOP,
+                          [styles.thumbnail__mobile()]: deviceType === DeviceT.MOBILE,
                         })}
                       >
                         <AspectRatio ratioHeight={9} ratioWidth={16}>
@@ -73,8 +73,8 @@ export const CartItem: FC<Props> = ({ item, onRemove, onUpdate }) => {
             </div>
             <div
               className={classNames(styles.container(), {
-                [styles.controller__desktop()]: deviceType === DeviceType.DESKTOP,
-                [styles.controller__mobile()]: deviceType === DeviceType.MOBILE,
+                [styles.controller__desktop()]: deviceType === DeviceT.DESKTOP,
+                [styles.controller__mobile()]: deviceType === DeviceT.MOBILE,
               })}
             >
               <label className={styles.counter()}>

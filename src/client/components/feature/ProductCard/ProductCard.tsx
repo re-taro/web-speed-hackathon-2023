@@ -1,10 +1,10 @@
 import * as currencyFormatter from 'currency-formatter';
 
 import { useActiveOffer } from '../../../hooks/useActiveOffer';
-import { Anchor } from '../../foundation/Anchor';
-import { AspectRatio } from '../../foundation/AspectRatio';
-import { Image } from '../../foundation/Image';
-import { ProductOfferLabel } from '../../product/ProductOfferLabel';
+import { Anchor } from '../../foundation/Anchor/Anchor';
+import { AspectRatio } from '../../foundation/AspectRatio/AspectRatio';
+import { Image } from '../../foundation/Image/Image';
+import { ProductOfferLabel } from '../../product/ProductOfferLabel/ProductOfferLabel';
 
 import * as styles from './ProductCard.styles';
 import type { ProductFragmentResponse } from '../../../graphql/fragments';

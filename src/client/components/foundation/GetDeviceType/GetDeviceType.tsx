@@ -1,11 +1,11 @@
 import { Component } from 'react';
 import type { ReactNode } from 'react';
 
-export const DeviceType = {
+export const DeviceT = {
   DESKTOP: 'DESKTOP',
   MOBILE: 'MOBILE',
 } as const;
-export type DeviceType = typeof DeviceType[keyof typeof DeviceType];
+export type DeviceType = typeof DeviceT[keyof typeof DeviceT];
 
 interface Props {
   children: ({ deviceType }: { deviceType: DeviceType }) => ReactNode
@@ -38,7 +38,7 @@ export class GetDeviceType extends Component<Props> {
   render() {
     const { children: render } = this.props;
     return render({
-      deviceType: this._windowWidth >= 1024 ? DeviceType.DESKTOP : DeviceType.MOBILE,
+      deviceType: this._windowWidth >= 1024 ? DeviceT.DESKTOP : DeviceT.MOBILE,
     });
   }
 }

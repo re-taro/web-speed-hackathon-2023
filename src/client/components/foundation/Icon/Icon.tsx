@@ -12,6 +12,7 @@ interface Props {
 }
 
 export const Icon: FC<Props> = ({ color, height, type, width }) => {
+  // eslint-disable-next-line import/namespace
   const Icon = Icons[type];
   return (
     <span className={classNames(type, styles.container({ color, height, width }))}>

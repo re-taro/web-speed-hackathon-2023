@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-import { Image } from '../../foundation/Image';
+import { Image } from '../../foundation/Image/Image';
 
 import * as styles from './Footer.styles';
 import type { FC } from 'react';

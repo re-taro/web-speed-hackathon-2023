@@ -2,7 +2,7 @@ import * as currencyFormatter from 'currency-formatter';
 import _ from 'lodash';
 import { memo } from 'react';
 
-import { ProductOfferLabel } from '../ProductOfferLabel';
+import { ProductOfferLabel } from '../ProductOfferLabel/ProductOfferLabel';
 
 import * as styles from './ProductOverview.styles';
 import type { LimitedTimeOfferFragmentResponse, ProductFragmentResponse } from '../../../graphql/fragments';

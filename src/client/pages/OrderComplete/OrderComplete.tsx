@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
 
-import { Layout } from '../../components/application/Layout';
-import { AspectRatio } from '../../components/foundation/AspectRatio';
-import { DeviceType, GetDeviceType } from '../../components/foundation/GetDeviceType';
-import { PrimaryAnchor } from '../../components/foundation/PrimaryAnchor';
-import { WidthRestriction } from '../../components/foundation/WidthRestriction';
-import { ProductHeroImage } from '../../components/product/ProductHeroImage';
+import { Layout } from '../../components/application/Layout/Layout';
+import { AspectRatio } from '../../components/foundation/AspectRatio/AspectRatio';
+import { DeviceT, GetDeviceType } from '../../components/foundation/GetDeviceType/GetDeviceType';
+import { PrimaryAnchor } from '../../components/foundation/PrimaryAnchor/PrimaryAnchor';
+import { WidthRestriction } from '../../components/foundation/WidthRestriction/WidthRestriction';
+import { ProductHeroImage } from '../../components/product/ProductHeroImage/ProductHeroImage';
 import { useAuthUser } from '../../hooks/useAuthUser';
 import { useRecommendation } from '../../hooks/useRecommendation';
 import { loadFonts } from '../../utils/load_fonts';
@@ -21,16 +21,13 @@ export const OrderComplete: FC = () => {
   const [isReadyFont, setIsReadyFont] = useState(false);
   const { authUserLoading, isAuthUser } = useAuthUser();
   const { recommendation } = useRecommendation();
-
   useEffect(() => {
     loadFonts().then(() => {
       setIsReadyFont(true);
     });
   }, []);
-
   if (!recommendation || !isReadyFont || authUserLoading)
     return null;
-
   if (!isAuthUser) {
     navigate('/');
     return null;
@@ -52,8 +49,8 @@ export const OrderComplete: FC = () => {
                     <div className={styles.noticeDescriptionWrapper()}>
                       <p
                         className={classNames(styles.noticeDescription(), {
-                          [styles.noticeDescription__desktop()]: deviceType === DeviceType.DESKTOP,
-                          [styles.noticeDescription__mobile()]: deviceType === DeviceType.MOBILE,
+                          [styles.noticeDescription__desktop()]: deviceType === DeviceT.DESKTOP,
+                          [styles.noticeDescription__mobile()]: deviceType === DeviceT.MOBILE,
                         })}
                       >
                         このサイトは架空のサイトであり、商品が発送されることはありません
@@ -61,12 +58,10 @@ export const OrderComplete: FC = () => {
                     </div>
                   </AspectRatio>
                 </div>
-
                 <div className={styles.recommended()}>
                   <h2 className={styles.recommendedHeading()}>こちらの商品もオススメです</h2>
                   <ProductHeroImage product={recommendation.product} title={recommendation.product.name} />
                 </div>
-
                 <div className={styles.backToTopButtonWrapper()}>
                   <PrimaryAnchor href="/" size="lg">
                     トップへ戻る
@@ -80,3 +75,5 @@ export const OrderComplete: FC = () => {
     </>
   );
 };
+
+export default OrderComplete;

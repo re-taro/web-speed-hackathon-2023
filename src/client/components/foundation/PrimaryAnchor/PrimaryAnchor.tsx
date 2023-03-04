@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-import { Anchor } from '../Anchor';
+import { Anchor } from '../Anchor/Anchor';
 
 import * as styles from './PrimaryAnchor.styles';
 import type { FC } from 'react';

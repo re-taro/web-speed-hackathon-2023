@@ -1,6 +1,6 @@
 
-import { AspectRatio } from '../../foundation/AspectRatio';
-import { Image } from '../../foundation/Image';
+import { AspectRatio } from '../../foundation/AspectRatio/AspectRatio';
+import { Image } from '../../foundation/Image/Image';
 
 import * as styles from './ReviewList.styles';
 import type { ReviewFragmentResponse } from '../../../graphql/fragments';

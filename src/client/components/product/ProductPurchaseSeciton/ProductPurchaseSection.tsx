@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import { memo } from 'react';
 
-import { Icon } from '../../foundation/Icon';
-import { OutlineButton } from '../../foundation/OutlineButton';
-import { PrimaryAnchor } from '../../foundation/PrimaryAnchor';
-import { PrimaryButton } from '../../foundation/PrimaryButton';
+import { Icon } from '../../foundation/Icon/Icon';
+import { OutlineButton } from '../../foundation/OutlineButton/OutlineButton';
+import { PrimaryAnchor } from '../../foundation/PrimaryAnchor/PrimaryAnchor';
+import { PrimaryButton } from '../../foundation/PrimaryButton/PrimaryButton';
 
 import * as styles from './ProductPurchaseSection.styles';
 import type { ProductFragmentResponse } from '../../../graphql/fragments';

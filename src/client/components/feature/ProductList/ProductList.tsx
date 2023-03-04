@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import { memo } from 'react';
 
-import { DeviceType, GetDeviceType } from '../../foundation/GetDeviceType';
-import { ProductGridList } from '../ProductGridList';
-import { ProductListSlider } from '../ProductListSlider';
+import { DeviceT, GetDeviceType } from '../../foundation/GetDeviceType/GetDeviceType';
+import { ProductGridList } from '../ProductGridList/ProductGridList';
+import { ProductListSlider } from '../ProductListSlider/ProductListSlider';
 import type { FeatureSectionFragmentResponse } from '../../../graphql/fragments';
 import type { FC } from 'react';
 
@@ -16,10 +16,10 @@ export const ProductList: FC<Props> = memo(({ featureSection }) => {
     <GetDeviceType>
       {({ deviceType }) => {
         switch (deviceType) {
-          case DeviceType.DESKTOP: {
+          case DeviceT.DESKTOP: {
             return <ProductListSlider featureSection={featureSection} />;
           }
-          case DeviceType.MOBILE: {
+          case DeviceT.MOBILE: {
             return <ProductGridList featureSection={featureSection} />;
           }
         }

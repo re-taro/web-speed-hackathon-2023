@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 
-import { ProductCard } from '../ProductCard';
-import { ArrowType, ProductListSlideButton } from '../ProductListSlideButton';
+import { ProductCard } from '../ProductCard/ProductCard';
+import { ArrowT, ProductListSlideButton } from '../ProductListSlideButton/ProductListSlideButton';
 
 import * as styles from './ProductListSlider.styles';
 import { useSlider } from './hooks/useSlider';
@@ -23,7 +23,7 @@ export const ProductListSlider: FC<Props> = ({ featureSection }) => {
     <div className={styles.container()}>
       <div className={styles.slideButton()}>
         <ProductListSlideButton
-          arrowType={ArrowType.LEFT}
+          arrowType={ArrowT.LEFT}
           disabled={slideIndex === 0}
           onClick={() => setSlideIndex(slideIndex - visibleItemCount)}
         />
@@ -47,7 +47,7 @@ export const ProductListSlider: FC<Props> = ({ featureSection }) => {
       </div>
       <div className={styles.slideButton()}>
         <ProductListSlideButton
-          arrowType={ArrowType.RIGHT}
+          arrowType={ArrowT.RIGHT}
           disabled={slideIndex + visibleItemCount >= products.length}
           onClick={() => setSlideIndex(slideIndex + visibleItemCount)}
         />

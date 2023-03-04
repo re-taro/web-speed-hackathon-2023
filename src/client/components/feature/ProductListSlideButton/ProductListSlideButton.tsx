@@ -1,15 +1,15 @@
 import classNames from 'classnames';
 
-import { Icon } from '../../foundation/Icon';
+import { Icon } from '../../foundation/Icon/Icon';
 
 import * as styles from './ProductListSlideButton.styles';
 import type { FC } from 'react';
 
-export const ArrowType = {
+export const ArrowT = {
   LEFT: 'LEFT',
   RIGHT: 'RIGHT',
 } as const;
-export type ArrowType = typeof ArrowType[keyof typeof ArrowType];
+export type ArrowType = typeof ArrowT[keyof typeof ArrowT];
 
 interface Props {
   arrowType: ArrowType
@@ -26,7 +26,7 @@ export const ProductListSlideButton: FC<Props> = ({ arrowType, disabled, onClick
       disabled={disabled}
       onClick={onClick}
     >
-      {arrowType === ArrowType.LEFT
+      {arrowType === ArrowT.LEFT
         ? (
           <Icon color="#222222" height={16} type="FaArrowLeft" width={16} />
           )

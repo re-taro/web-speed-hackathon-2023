@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 
 import { getMediaType } from '../../../../utils/get_media_type';
-import { DeviceType, GetDeviceType } from '../../../foundation/GetDeviceType';
-import { Image } from '../../../foundation/Image';
+import { DeviceT, GetDeviceType } from '../../../foundation/GetDeviceType/GetDeviceType';
+import { Image } from '../../../foundation/Image/Image';
 
 import * as styles from './MediaItemPreiewer.styles';
 import type { MediaFileFragmentResponse } from '../../../../graphql/fragments';
@@ -27,8 +27,8 @@ export const MediaItemPreviewer: FC<Props> = ({ file }) => {
               muted
               playsInline
               className={classNames(styles.video(), {
-                [styles.video__desktop()]: deviceType === DeviceType.DESKTOP,
-                [styles.video__mobile()]: deviceType === DeviceType.MOBILE,
+                [styles.video__desktop()]: deviceType === DeviceT.DESKTOP,
+                [styles.video__mobile()]: deviceType === DeviceT.MOBILE,
               })}
               src={file.filename}
             />

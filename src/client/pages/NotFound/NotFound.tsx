@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 
-import { Layout } from '../../components/application/Layout';
+import { Layout } from '../../components/application/Layout/Layout';
 import { loadFonts } from '../../utils/load_fonts';
 
 import * as styles from './NotFound.styles';
@@ -38,3 +38,5 @@ export const NotFound: FC = () => {
     </>
   );
 };
+
+export default NotFound;

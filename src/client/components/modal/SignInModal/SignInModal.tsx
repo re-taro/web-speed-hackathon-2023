@@ -3,10 +3,10 @@ import { useState } from 'react';
 import * as z from 'zod';
 
 import { useSignIn } from '../../../hooks/useSignIn';
-import { useCloseModal, useIsOpenModal, useOpenModal } from '../../../store/modal';
-import { Modal } from '../../foundation/Modal';
-import { PrimaryButton } from '../../foundation/PrimaryButton';
-import { TextInput } from '../../foundation/TextInput';
+import { useCloseModal, useIsOpenModal, useOpenModal } from '../../../store/modal/hooks';
+import { Modal } from '../../foundation/Modal/Modal';
+import { PrimaryButton } from '../../foundation/PrimaryButton/PrimaryButton';
+import { TextInput } from '../../foundation/TextInput/TextInput';
 
 import * as styles from './SignInModal.styles';
 import type { FC } from 'react';
@@ -55,10 +55,10 @@ export const SignInModal: FC = () => {
     },
     validate(values) {
       const errors: FormikErrors<SignInForm> = {};
-      if (values.email != '' && !emailSchema.safeParse(values.email).success)
+      if (values.email !== '' && !emailSchema.safeParse(values.email).success)
         errors.email = 'メールアドレスの形式が間違っています';
 
-      if (values.password != '' && !passwordSchema.safeParse(values.password).success)
+      if (values.password !== '' && !passwordSchema.safeParse(values.password).success)
         errors.password = '英数字以外の文字を含めてください';
 
       return errors;

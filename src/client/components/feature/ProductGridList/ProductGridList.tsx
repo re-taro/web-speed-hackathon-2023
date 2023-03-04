@@ -1,4 +1,4 @@
-import { ProductCard } from '../ProductCard';
+import { ProductCard } from '../ProductCard/ProductCard';
 import * as styles from './ProductGridList.styles';
 import type { FC } from 'react';
 

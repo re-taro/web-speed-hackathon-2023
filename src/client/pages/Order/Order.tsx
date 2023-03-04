@@ -1,10 +1,10 @@
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
 
-import { Layout } from '../../components/application/Layout';
-import { WidthRestriction } from '../../components/foundation/WidthRestriction';
-import { OrderForm } from '../../components/order/OrderForm';
-import { OrderPreview } from '../../components/order/OrderPreview';
+import { Layout } from '../../components/application/Layout/Layout';
+import { WidthRestriction } from '../../components/foundation/WidthRestriction/WidthRestriction';
+import { OrderForm } from '../../components/order/OrderForm/OrderForm';
+import { OrderPreview } from '../../components/order/OrderPreview/OrderPreview';
 import { useAuthUser } from '../../hooks/useAuthUser';
 import { useOrder } from '../../hooks/useOrder';
 import { useSubmitOrder } from '../../hooks/useSubmitOrder';
@@ -30,7 +30,7 @@ export const Order: FC = () => {
   }
 
   const renderContents = () => {
-    if (!authUser || order == undefined || order.items.length === 0) {
+    if (!authUser || order === undefined || order.items.length === 0) {
       return (
         <div className={styles.emptyContainer()}>
           <p className={styles.emptyDescription()}>商品がカートに入っていません</p>
@@ -93,3 +93,5 @@ export const Order: FC = () => {
     </>
   );
 };
+
+export default Order;
