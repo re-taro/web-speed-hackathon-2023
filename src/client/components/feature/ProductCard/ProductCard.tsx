@@ -27,7 +27,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
           ? (
             <div className={styles.image()}>
               <AspectRatio ratioHeight={9} ratioWidth={16}>
-                <Image height={126} src={thumbnailFile.filename} width={224} />
+                <Image loading="lazy" height={126} src={thumbnailFile.filename} width={224} />
               </AspectRatio>
             </div>
             )
