@@ -1,36 +1,17 @@
-import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { loadFonts } from '../../utils/load_fonts';
-
 import * as styles from './NotFound.styles';
 import type { FC } from 'react';
 
 export const NotFound: FC = () => {
-  const [isReady, setIsReady] = useState(false);
-
-  useEffect(() => {
-    const load = async() => {
-      await loadFonts();
-      setIsReady(true);
-    };
-
-    load();
-  }, []);
-
-  if (!isReady)
-    return null;
-
   return (
     <>
       <Helmet>
         <title>ページが見つかりませんでした</title>
       </Helmet>
-      <div>
-        <div className={styles.container()}>
-          <div className={styles.inner()}>
-            <p className={styles.mainParagraph()}>ページが存在しません</p>
-            <p className={styles.subParagraph()}>Not Found</p>
-          </div>
+      <div className={styles.container()}>
+        <div className={styles.inner()}>
+          <p className={styles.mainParagraph()}>ページが存在しません</p>
+          <p className={styles.subParagraph()}>Not Found</p>
         </div>
       </div>
     </>
