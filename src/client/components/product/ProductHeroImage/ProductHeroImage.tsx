@@ -1,23 +1,23 @@
 import classNames from 'classnames';
 import _ from 'lodash';
 import { memo } from 'react';
-import type { FC } from 'react';
 
-import type { ProductFragmentResponse } from '../../../graphql/fragments';
 import { Anchor } from '../../foundation/Anchor';
 import { AspectRatio } from '../../foundation/AspectRatio';
 import { DeviceType, GetDeviceType } from '../../foundation/GetDeviceType';
 import { WidthRestriction } from '../../foundation/WidthRestriction';
 
 import * as styles from './ProductHeroImage.styles';
+import type { ProductFragmentResponse } from '../../../graphql/fragments';
+import type { FC } from 'react';
 
-type Props = {
-  product: ProductFragmentResponse;
-  title: string;
-};
+interface Props {
+  product: ProductFragmentResponse
+  title: string
+}
 
 export const ProductHeroImage: FC<Props> = memo(({ product, title }) => {
-  const thumbnailFile = product.media.find((productMedia) => productMedia.isThumbnail)?.file;
+  const thumbnailFile = product.media.find(productMedia => productMedia.isThumbnail)?.file;
 
   return (
     <GetDeviceType>
@@ -31,8 +31,8 @@ export const ProductHeroImage: FC<Props> = memo(({ product, title }) => {
                     className={styles.image()}
                     height={576}
                     src={
-                      thumbnailFile?.filename ??
-                      'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
+                      thumbnailFile?.filename
+                      ?? 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
                     }
                     width={1024}
                   />

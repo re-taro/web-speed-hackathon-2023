@@ -10,16 +10,16 @@ const FOOTER_LINK_ITEMS = ['利用規約', 'お問い合わせ', 'Q&A', '運営�
 export const Footer: FC = () => {
   return (
     <footer className={styles.container()}>
-    <ul className={styles.itemList()}>
-      {FOOTER_LINK_ITEMS.map((item) => (
-        <li key={item} className={styles.item()}>
-          {item}
-        </li>
-      ))}
-    </ul>
-    <NavLink to="/">
-      <Image src="/icons/logo.png" srcSet="/icons/logo.png, /icons/logo@2x.png 2x" />
-    </NavLink>
-  </footer>
+      <ul className={styles.itemList()}>
+        {FOOTER_LINK_ITEMS.map(item => (
+          <li key={item} className={styles.item()}>
+            {item}
+          </li>
+        ))}
+      </ul>
+      <NavLink to="/">
+        <Image src="/icons/logo.png" srcSet="/icons/logo.png, /icons/logo@2x.png 2x" />
+      </NavLink>
+    </footer>
   );
 };
