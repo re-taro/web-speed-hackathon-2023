@@ -1,7 +1,7 @@
 import { ApolloProvider, SuspenseCache } from '@apollo/client';
 import { BrowserRouter } from 'react-router-dom';
-import { RecoilRoot } from 'recoil';
 import { apolloClient } from '../../../utils//apollo_client';
+import { ModalStateProvider } from '../../../store/modal/context';
 import type { FC, ReactNode } from 'react';
 
 interface Props {
@@ -13,9 +13,9 @@ const suspenseCache = new SuspenseCache();
 export const Providers: FC<Props> = ({ children }) => (
   <ApolloProvider client={apolloClient} suspenseCache={suspenseCache}>
     <BrowserRouter>
-      <RecoilRoot>
+      <ModalStateProvider>
         {children}
-      </RecoilRoot>
+      </ModalStateProvider>
     </BrowserRouter>
   </ApolloProvider>
 );

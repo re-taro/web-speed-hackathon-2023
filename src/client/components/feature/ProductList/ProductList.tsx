@@ -1,6 +1,3 @@
-import _ from 'lodash';
-import { memo } from 'react';
-
 import { DeviceT, GetDeviceType } from '../../foundation/GetDeviceType/GetDeviceType';
 import { ProductGridList } from '../ProductGridList/ProductGridList';
 import { ProductListSlider } from '../ProductListSlider/ProductListSlider';
@@ -11,7 +8,7 @@ interface Props {
   featureSection: FeatureSectionFragmentResponse
 }
 
-export const ProductList: FC<Props> = memo(({ featureSection }) => {
+export const ProductList: FC<Props> = ({ featureSection }) => {
   return (
     <GetDeviceType>
       {({ deviceType }) => {
@@ -26,6 +23,4 @@ export const ProductList: FC<Props> = memo(({ featureSection }) => {
       }}
     </GetDeviceType>
   );
-}, _.isEqual);
-
-ProductList.displayName = 'ProductList';
+};

@@ -1,9 +1,5 @@
 import * as currencyFormatter from 'currency-formatter';
-import _ from 'lodash';
-import { memo } from 'react';
-
 import { ProductOfferLabel } from '../ProductOfferLabel/ProductOfferLabel';
-
 import * as styles from './ProductOverview.styles';
 import type { LimitedTimeOfferFragmentResponse, ProductFragmentResponse } from '../../../graphql/fragments';
 import type { FC } from 'react';
@@ -13,7 +9,7 @@ interface Props {
   activeOffer: LimitedTimeOfferFragmentResponse | undefined
 }
 
-export const ProductOverview: FC<Props> = memo(({ activeOffer, product }) => {
+export const ProductOverview: FC<Props> = ({ activeOffer, product }) => {
   if (product === undefined)
     return null;
 
@@ -59,6 +55,4 @@ export const ProductOverview: FC<Props> = memo(({ activeOffer, product }) => {
       </div>
     </div>
   );
-}, _.isEqual);
-
-ProductOverview.displayName = 'ProductOverview';
+};

@@ -1,12 +1,8 @@
 import classNames from 'classnames';
-import _ from 'lodash';
-import { memo } from 'react';
-
 import { Anchor } from '../../foundation/Anchor/Anchor';
 import { AspectRatio } from '../../foundation/AspectRatio/AspectRatio';
 import { DeviceT, GetDeviceType } from '../../foundation/GetDeviceType/GetDeviceType';
 import { WidthRestriction } from '../../foundation/WidthRestriction/WidthRestriction';
-
 import * as styles from './ProductHeroImage.styles';
 import type { ProductFragmentResponse } from '../../../graphql/fragments';
 import type { FC } from 'react';
@@ -16,7 +12,7 @@ interface Props {
   title: string
 }
 
-export const ProductHeroImage: FC<Props> = memo(({ product, title }) => {
+export const ProductHeroImage: FC<Props> = ({ product, title }) => {
   const thumbnailFile = product.media.find(productMedia => productMedia.isThumbnail)?.file;
 
   return (
@@ -63,6 +59,4 @@ export const ProductHeroImage: FC<Props> = memo(({ product, title }) => {
       }}
     </GetDeviceType>
   );
-}, _.isEqual);
-
-ProductHeroImage.displayName = 'ProductHeroImage';
+};
