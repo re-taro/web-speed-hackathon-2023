@@ -1,7 +1,5 @@
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
-
-import { Layout } from '../../components/application/Layout/Layout';
 import { WidthRestriction } from '../../components/foundation/WidthRestriction/WidthRestriction';
 import { ProductMediaListPreviewer } from '../../components/product/ProductMediaListPreviewer/ProductMediaListPreviewer';
 import { ProductOverview } from '../../components/product/ProductOverview/ProductOverview';
@@ -16,7 +14,6 @@ import { useSendReview } from '../../hooks/useSendReview';
 import { useUpdateCartItem } from '../../hooks/useUpdateCartItems';
 import { useOpenModal } from '../../store/modal/hooks';
 import { normalizeCartItemCount } from '../../utils/normalize_cart_item';
-
 import * as styles from './ProductDetail.styles';
 import type { FC } from 'react';
 
@@ -51,7 +48,7 @@ export const ProductDetail: FC = () => {
           <title>{product.name}</title>
         </Helmet>
       )}
-      <Layout>
+      <div>
         <WidthRestriction>
           <div className={styles.container()}>
             <section className={styles.details()}>
@@ -75,7 +72,7 @@ export const ProductDetail: FC = () => {
             </section>
           </div>
         </WidthRestriction>
-      </Layout>
+      </div>
     </>
   );
 };

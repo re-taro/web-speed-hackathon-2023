@@ -2,8 +2,6 @@ import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
-
-import { Layout } from '../../components/application/Layout/Layout';
 import { AspectRatio } from '../../components/foundation/AspectRatio/AspectRatio';
 import { DeviceT, GetDeviceType } from '../../components/foundation/GetDeviceType/GetDeviceType';
 import { PrimaryAnchor } from '../../components/foundation/PrimaryAnchor/PrimaryAnchor';
@@ -12,7 +10,6 @@ import { ProductHeroImage } from '../../components/product/ProductHeroImage/Prod
 import { useAuthUser } from '../../hooks/useAuthUser';
 import { useRecommendation } from '../../hooks/useRecommendation';
 import { loadFonts } from '../../utils/load_fonts';
-
 import * as styles from './OrderComplete.styles';
 import type { FC } from 'react';
 
@@ -38,7 +35,7 @@ export const OrderComplete: FC = () => {
       <Helmet>
         <title>購入が完了しました</title>
       </Helmet>
-      <Layout>
+      <div>
         <GetDeviceType>
           {({ deviceType }) => (
             <WidthRestriction>
@@ -71,7 +68,7 @@ export const OrderComplete: FC = () => {
             </WidthRestriction>
           )}
         </GetDeviceType>
-      </Layout>
+      </div>
     </>
   );
 };

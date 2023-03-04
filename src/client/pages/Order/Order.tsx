@@ -1,7 +1,5 @@
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
-
-import { Layout } from '../../components/application/Layout/Layout';
 import { WidthRestriction } from '../../components/foundation/WidthRestriction/WidthRestriction';
 import { OrderForm } from '../../components/order/OrderForm/OrderForm';
 import { OrderPreview } from '../../components/order/OrderPreview/OrderPreview';
@@ -9,26 +7,22 @@ import { useAuthUser } from '../../hooks/useAuthUser';
 import { useOrder } from '../../hooks/useOrder';
 import { useSubmitOrder } from '../../hooks/useSubmitOrder';
 import { useUpdateCartItem } from '../../hooks/useUpdateCartItems';
-
 import * as styles from './Order.styles';
 import type { FC } from 'react';
 
 export const Order: FC = () => {
   const navigate = useNavigate();
-
   const { authUser, authUserLoading, isAuthUser } = useAuthUser();
   const { updateCartItem } = useUpdateCartItem();
   const { submitOrder } = useSubmitOrder();
   const { order } = useOrder();
-
   if (authUserLoading)
     return null;
-
   if (!isAuthUser) {
     navigate('/');
+
     return null;
   }
-
   const renderContents = () => {
     if (!authUser || order === undefined || order.items.length === 0) {
       return (
@@ -87,9 +81,9 @@ export const Order: FC = () => {
       <Helmet>
         <title>購入手続き</title>
       </Helmet>
-      <Layout>
+      <div>
         <WidthRestriction>{renderContents()}</WidthRestriction>
-      </Layout>
+      </div>
     </>
   );
 };
