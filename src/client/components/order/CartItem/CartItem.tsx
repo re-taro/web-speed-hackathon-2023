@@ -79,6 +79,7 @@ export const CartItem: FC<Props> = ({ item, onRemove, onUpdate }) => {
             >
               <label className={styles.counter()}>
                 個数:
+                {' '}
                 <input
                   className={styles.counterInput()}
                   defaultValue={item.amount}

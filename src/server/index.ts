@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import http from 'node:http';
 
 import { koaMiddleware } from '@as-integrations/koa';
@@ -76,6 +78,7 @@ async function init(): Promise<void> {
     }),
   );
 
+  // eslint-disable-next-line no-return-await
   app.use(async ctx => await send(ctx, rootResolve('/dist/public/index.html')));
 
   httpServer.listen({ port: PORT }, () => {
@@ -95,3 +98,5 @@ init().catch((err) => {
   console.error(err);
   process.exit(1);
 });
+
+/* eslint-enable no-console */

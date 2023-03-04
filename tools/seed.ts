@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import path from 'node:path';
 
 import { Temporal } from '@js-temporal/polyfill';
@@ -371,3 +373,5 @@ seed().catch((err) => {
   console.error(err);
   process.exit(1);
 });
+
+/* eslint-enable no-console */

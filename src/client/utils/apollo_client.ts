@@ -1,3 +1,5 @@
+/* eslint-disable prefer-promise-reject-errors */
+
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 import type { HttpOptions } from '@apollo/client';
 
@@ -46,3 +48,5 @@ export const apolloClient = new ApolloClient({
   queryDeduplication: false,
   uri: '/graphql',
 });
+
+/* eslint-enable prefer-promise-reject-errors */
