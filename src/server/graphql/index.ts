@@ -40,7 +40,7 @@ export async function initializeApolloServer(): Promise<ApolloServer<Context>> {
     ].map(filepath => fs.readFile(filepath, { encoding: 'utf-8' })),
   );
 
-  const server = new ApolloServer({
+  const server = new ApolloServer<Context>({
     plugins: [ApolloServerPluginLandingPageLocalDefault({ includeCookies: true })],
     resolvers: {
       FeatureItem: featureItemResolver,

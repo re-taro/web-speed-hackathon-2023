@@ -1,23 +1,20 @@
 import * as currencyFormatter from 'currency-formatter';
-
 import { useActiveOffer } from '../../../hooks/useActiveOffer';
 import { Anchor } from '../../foundation/Anchor/Anchor';
 import { AspectRatio } from '../../foundation/AspectRatio/AspectRatio';
 import { Image } from '../../foundation/Image/Image';
 import { ProductOfferLabel } from '../../product/ProductOfferLabel/ProductOfferLabel';
-
 import * as styles from './ProductCard.styles';
-import type { ProductFragmentResponse } from '../../../graphql/fragments';
+import type { FeatureItemFragmentResponse } from '../../../graphql/fragments';
 import type { FC } from 'react';
 
 interface Props {
-  product: ProductFragmentResponse
+  product: FeatureItemFragmentResponse['product']
 }
 
 export const ProductCard: FC<Props> = ({ product }) => {
   const thumbnailFile = product.media.find(productMedia => productMedia.isThumbnail)?.file;
-
-  const { activeOffer } = useActiveOffer(product);
+  const { activeOffer } = useActiveOffer(product.offers);
   const price = activeOffer?.price ?? product.price;
 
   return (
@@ -27,7 +24,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
           ? (
             <div className={styles.image()}>
               <AspectRatio ratioHeight={9} ratioWidth={16}>
-                <Image loading="lazy" height={126} src={thumbnailFile.filename} width={224} />
+                <Image height={126} loading="lazy" src={thumbnailFile.filename} width={224} />
               </AspectRatio>
             </div>
             )
