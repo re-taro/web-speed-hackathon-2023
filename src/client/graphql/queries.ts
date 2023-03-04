@@ -1,11 +1,11 @@
 import { gql } from '@apollo/client';
-
 import {
   AuthUserFragment,
   FeatureSectionFragment,
   ProductReviewFragment,
   ProductWithReviewFragment,
   RecommendationFragment,
+  ZipcodeFragment,
 } from './fragments';
 import type {
   AuthUserFragmentResponse,
@@ -13,6 +13,7 @@ import type {
   ProductReviewFragmentResponse,
   ProductWithReviewFragmentResponse,
   RecommendationFragmentResponse,
+  ZipcodeFragmentResponse,
 } from './fragments';
 
 export const GetAuthUserQuery = gql`
@@ -78,4 +79,16 @@ export const GetFeatureSectionsQuery = gql`
 `;
 export interface GetFeatureSectionsQueryResponse {
   features: FeatureSectionFragmentResponse[]
+}
+
+export const GetZipcodeQuery = gql`
+  ${ZipcodeFragment}
+  query GetZipcode($code: String!) {
+    zipcode(code: $code) {
+      ...ZipcodeFragment
+    }
+  }
+`;
+export interface GetZipcodeQueryResponse {
+  zipcode: ZipcodeFragmentResponse | null
 }

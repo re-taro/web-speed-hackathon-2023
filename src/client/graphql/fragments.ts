@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client';
-
 import type { FeatureItem } from '../../model/feature_item';
 import type { FeatureSection } from '../../model/feature_section';
 import type { LimitedTimeOffer } from '../../model/limited_time_offer';
@@ -12,6 +11,7 @@ import type { Recommendation } from '../../model/recommendation';
 import type { Review } from '../../model/review';
 import type { ShoppingCartItem } from '../../model/shopping_cart_item';
 import type { User } from '../../model/user';
+import type { Zipcode } from '../../model/zipcode';
 
 export const MediaFileFragment = gql`
   fragment MediaFileFragment on MediaFile {
@@ -236,3 +236,11 @@ export const FeatureSectionFragment = gql`
 export type FeatureSectionFragmentResponse = Pick<FeatureSection, 'id' | 'title'> & {
   items: FeatureItemFragmentResponse[]
 };
+
+export const ZipcodeFragment = gql`
+  fragment ZipcodeFragment on Zipcode {
+    zipcode
+    address
+  }
+`;
+export type ZipcodeFragmentResponse = Pick<Zipcode, 'zipcode' | 'address'>;

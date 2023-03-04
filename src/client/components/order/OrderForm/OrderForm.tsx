@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
-import _ from 'lodash';
 import { useEffect } from 'react';
 
+import { useZipcode } from '../../../hooks/useZipCode';
 import { PrimaryButton } from '../../foundation/PrimaryButton/PrimaryButton';
 import { TextInput } from '../../foundation/TextInput/TextInput';
 
@@ -29,26 +29,16 @@ export const OrderForm: FC<Props> = ({ onSubmit }) => {
     },
     onSubmit,
   });
-
+  const { zipcode } = useZipcode(formik.values.zipCode);
   useEffect(() => {
-    let isCurrent = true;
-    (async() => {
-      const { default: zipcodeJa } = await import('zipcode-ja');
-      if (isCurrent) {
-        const zipCode = formik.values.zipCode;
-        const address = [...(_.cloneDeep(zipcodeJa[zipCode])?.address ?? [])];
-        const prefecture = address.shift();
-        const city = address.join(' ');
-
-        formik.setFieldValue('prefecture', prefecture);
-        formik.setFieldValue('city', city);
-      }
-    })();
-
-    return () => {
-      isCurrent = false;
-    };
-  }, [formik]);
+    if (zipcode == null)
+      return;
+    const address = [...zipcode.address];
+    const prefecture = address.shift();
+    const city = address.join(' ');
+    formik.setFieldValue('prefecture', prefecture);
+    formik.setFieldValue('city', city);
+  }, [formik, zipcode]);
 
   return (
     <div className={styles.container()}>
