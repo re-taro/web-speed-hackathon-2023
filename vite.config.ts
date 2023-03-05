@@ -15,8 +15,7 @@ export default defineConfig(async({ mode }) => {
           manualChunks: {
             vendor: ['react', 'react-dom', 'react-router-dom', 'react-helmet'],
             apollo: ['@apollo/client', 'graphql'],
-            formik: ['formik'],
-            zod: ['zod'],
+            form: ['react-hook-form'],
             temporal: ['@js-temporal/polyfill'],
           },
         },

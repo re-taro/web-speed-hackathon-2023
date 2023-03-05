@@ -1,8 +1,8 @@
-import { useFormik } from 'formik';
 import { useEffect } from 'react';
+import { useForm, useWatch } from 'react-hook-form';
 import { useZipcode } from '../../../hooks/useZipcode';
 import { PrimaryButton } from '../../foundation/PrimaryButton/PrimaryButton';
-import { TextInput } from '../../foundation/TextInput/TextInput';
+import { WrapedTextInput } from '../../foundation/TextInput/WrapedTextInput';
 import * as styles from './OrderForm.styles';
 import type { FC } from 'react';
 
@@ -18,61 +18,39 @@ interface Props {
 }
 
 export const OrderForm: FC<Props> = ({ onSubmit }) => {
-  const { handleChange, handleSubmit, setFieldValue, values } = useFormik<OrderFormValue>({
-    initialValues: {
+  const { control, handleSubmit, setValue } = useForm<OrderFormValue>({
+    defaultValues: {
       city: '',
       prefecture: '',
       streetAddress: '',
       zipCode: '',
     },
-    onSubmit,
   });
-  const { zipcode } = useZipcode(values.zipCode);
+  const rawZipCode = useWatch({ control, name: 'zipCode' });
+  const { zipcode } = useZipcode(rawZipCode);
   useEffect(() => {
     if (zipcode == null)
       return;
     const address = [...zipcode.address];
     const prefecture = address.shift();
     const city = address.join(' ');
-    setFieldValue('prefecture', prefecture);
-    setFieldValue('city', city);
-  }, [setFieldValue, zipcode]);
+    setValue('prefecture', prefecture ?? '');
+    setValue('city', city);
+  }, [setValue, zipcode]);
 
   return (
     <div className={styles.container()}>
-      <form className={styles.form()} data-testid="order-form" onSubmit={handleSubmit}>
+      <form className={styles.form()} data-testid="order-form" onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.inputList()}>
-          <TextInput
+          <WrapedTextInput required control={control} label="郵便番号" name="zipCode" placeholder="例: 1500042" />
+          <WrapedTextInput required control={control} label="都道府県" name="prefecture" placeholder="例: 東京都" />
+          <WrapedTextInput required control={control} label="市区町村" name="city" placeholder="例: 渋谷区宇田川町" />
+          <WrapedTextInput
             required
-            id="zipCode"
-            label="郵便番号"
-            onChange={handleChange}
-            placeholder="例: 1500042"
-            value={values.zipCode}
-          />
-          <TextInput
-            required
-            id="prefecture"
-            label="都道府県"
-            onChange={handleChange}
-            placeholder="例: 東京都"
-            value={values.prefecture}
-          />
-          <TextInput
-            required
-            id="city"
-            label="市区町村"
-            onChange={handleChange}
-            placeholder="例: 渋谷区宇田川町"
-            value={values.city}
-          />
-          <TextInput
-            required
-            id="streetAddress"
+            control={control}
             label="番地・建物名など"
-            onChange={handleChange}
+            name="streetAddress"
             placeholder="例: 40番1号 Abema Towers"
-            value={values.streetAddress}
           />
         </div>
         <div className={styles.purchaseButton()}>
