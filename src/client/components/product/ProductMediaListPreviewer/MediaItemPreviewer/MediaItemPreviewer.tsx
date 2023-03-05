@@ -1,9 +1,7 @@
 import classNames from 'classnames';
-
 import { getMediaType } from '../../../../utils/get_media_type';
 import { DeviceT, GetDeviceType } from '../../../foundation/GetDeviceType/GetDeviceType';
-import { Image } from '../../../foundation/Image/Image';
-
+import { MediaImage } from '../MediaImage/MediaImage';
 import * as styles from './MediaItemPreiewer.styles';
 import type { MediaFileFragmentResponse } from '../../../../graphql/fragments';
 import type { FC } from 'react';
@@ -17,7 +15,7 @@ export const MediaItemPreviewer: FC<Props> = ({ file }) => {
 
   return (
     <div className={styles.container()}>
-      {type === 'image' && <Image fill src={file.filename} />}
+      {type === 'image' && <MediaImage filename={file.filename} />}
       {type === 'video' && (
         <GetDeviceType>
           {({ deviceType }) => (
