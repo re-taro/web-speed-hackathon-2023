@@ -5,7 +5,7 @@
     "start": "npm-run-all -p start:client start:server",
     "start:client": "vite build --watch",
     "start:server": "nodemon --watch src/server --ext 'ts,tsx' --exec 'ts-node src/server'",
-    "start:analyze": "vite build -w --mode=analyze",
+    "start:analyze": "vite build --mode=analyze",
     "build": "npm-run-all -s build:tsc build:vite",
     "build:tsc": "tsc --project tsconfig.build.json",
     "build:vite": "vite build",
