@@ -3,10 +3,13 @@ import { ProductMedia } from '../../model/product_media';
 import { Review } from '../../model/review';
 import { dataSource } from '../data_source';
 import type { Product } from '../../model/product';
-
 import type { GraphQLModelResolver } from './model_resolver';
 
-export const productResolver: GraphQLModelResolver<Product> = {
+export const productResolver: GraphQLModelResolver<
+Product & {
+  thumbnail: ProductMedia
+}
+> = {
   media: (parent) => {
     return dataSource.manager.find(ProductMedia, {
       where: {
@@ -27,5 +30,13 @@ export const productResolver: GraphQLModelResolver<Product> = {
         product: parent,
       },
     });
+  },
+  thumbnail: (parent) => {
+    return dataSource.manager.findOne(ProductMedia, {
+      where: {
+        isThumbnail: true,
+        product: parent,
+      },
+    }) as Promise<ProductMedia>;
   },
 };

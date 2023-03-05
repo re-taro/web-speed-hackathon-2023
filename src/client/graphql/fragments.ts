@@ -46,26 +46,37 @@ export type ProductMediaFragmentResponse = Pick<ProductMedia, 'id' | 'isThumbnai
   file: MediaFileFragmentResponse
 };
 
-export const ProductFragment = gql`
-  ${ProductMediaFragment}
+export const ProductBaseFragment = gql`
   ${LimitedTimeOfferFragment}
 
-  fragment ProductFragment on Product {
+  fragment ProductBaseFragment on Product {
     id
     name
     price
-    description
-    media {
-      ...ProductMediaFragment
-    }
     offers {
       ...LimitedTimeOfferFragment
     }
   }
 `;
-export type ProductFragmentResponse = Pick<Product, 'id' | 'name' | 'price' | 'description'> & {
-  media: ProductMediaFragmentResponse[]
+export type ProductBaseFragmentResponse = Pick<Product, 'id' | 'name' | 'price'> & {
   offers: LimitedTimeOfferFragmentResponse[]
+};
+
+export const ProductFragment = gql`
+  ${ProductMediaFragment}
+  ${ProductBaseFragment}
+
+  fragment ProductFragment on Product {
+    ...ProductBaseFragment
+    description
+    media {
+      ...ProductMediaFragment
+    }
+  }
+`;
+export type ProductFragmentResponse = ProductBaseFragmentResponse &
+Pick<Product, 'description'> & {
+  media: ProductMediaFragmentResponse[]
 };
 
 export const ProfileFragment = gql`
@@ -142,18 +153,33 @@ export type ProductWithReviewFragmentResponse = ProductFragmentResponse & {
   reviews: ReviewFragmentResponse[]
 };
 
+export const ProductToListFragment = gql`
+  ${ProductMediaFragment}
+  ${ProductBaseFragment}
+
+  fragment ProductToListFragment on Product {
+    ...ProductBaseFragment
+    thumbnail {
+      ...ProductMediaFragment
+    }
+  }
+`;
+export type ProductToListFragmentResponse = ProductBaseFragmentResponse & {
+  thumbnail: ProductMediaFragmentResponse
+};
+
 export const RecommendationFragment = gql`
-  ${ProductFragment}
+  ${ProductToListFragment}
 
   fragment RecommendationFragment on Recommendation {
     id
     product {
-      ...ProductFragment
+      ...ProductToListFragment
     }
   }
 `;
 export type RecommendationFragmentResponse = Pick<Recommendation, 'id'> & {
-  product: ProductFragmentResponse
+  product: ProductToListFragmentResponse
 };
 
 export const ShoppingCartItemFragment = gql`
@@ -209,26 +235,17 @@ export type AuthUserFragmentResponse = UserFragmentResponse & {
 };
 
 export const FeatureItemFragment = gql`
-  ${ProductMediaFragment}
-  ${LimitedTimeOfferFragment}
+  ${ProductToListFragment}
 
   fragment FeatureItemFragment on FeatureItem {
     id
     product {
-      id
-      name
-      price
-      media {
-        ...ProductMediaFragment
-      }
-      offers {
-        ...LimitedTimeOfferFragment
-      }
+      ...ProductToListFragment
     }
   }
 `;
 export type FeatureItemFragmentResponse = Pick<FeatureItem, 'id'> & {
-  product: Pick<ProductFragmentResponse, 'id' | 'name' | 'offers' | 'price' | 'media'>
+  product: ProductToListFragmentResponse
 };
 
 export const FeatureSectionFragment = gql`

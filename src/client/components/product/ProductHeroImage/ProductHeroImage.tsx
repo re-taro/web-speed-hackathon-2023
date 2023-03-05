@@ -4,17 +4,15 @@ import { AspectRatio } from '../../foundation/AspectRatio/AspectRatio';
 import { DeviceT, GetDeviceType } from '../../foundation/GetDeviceType/GetDeviceType';
 import { WidthRestriction } from '../../foundation/WidthRestriction/WidthRestriction';
 import * as styles from './ProductHeroImage.styles';
-import type { ProductFragmentResponse } from '../../../graphql/fragments';
+import type { ProductToListFragmentResponse } from '../../../graphql/fragments';
 import type { FC } from 'react';
 
 interface Props {
-  product: ProductFragmentResponse
+  product: ProductToListFragmentResponse
   title: string
 }
 
 export const ProductHeroImage: FC<Props> = ({ product, title }) => {
-  const thumbnailFile = product.media.find(productMedia => productMedia.isThumbnail)?.file;
-
   return (
     <GetDeviceType>
       {({ deviceType }) => {
@@ -23,17 +21,8 @@ export const ProductHeroImage: FC<Props> = ({ product, title }) => {
             <Anchor href={`/product/${product.id}`}>
               <div className={styles.container()}>
                 <AspectRatio ratioHeight={9} ratioWidth={16}>
-                  <img
-                    className={styles.image()}
-                    height={576}
-                    src={
-                      thumbnailFile?.filename
-                      ?? 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
-                    }
-                    width={1024}
-                  />
+                  <img className={styles.image()} height={576} src={product.thumbnail.file.filename} width={1024} />
                 </AspectRatio>
-
                 <div className={styles.overlay()}>
                   <p
                     className={classNames(styles.title(), {
