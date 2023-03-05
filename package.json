@@ -8,7 +8,7 @@
     "start:analyze": "vite build --mode=analyze",
     "build": "npm-run-all -s build:tsc build:vite",
     "build:tsc": "tsc --project tsconfig.build.json",
-    "build:vite": "vite build",
+    "build:vite": "cross-env NODE_ENV=production vite build",
     "format": "npm-run-all -s format:*",
     "format:eslint": "eslint ./ --fix --ext .js,.jsx,.ts,.tsx",
     "format:stylelint": "stylelint --ignore-path .gitignore --fix './**/styles.{js,ts}' './**/*.styles.{js,ts}' './**/*.css'",

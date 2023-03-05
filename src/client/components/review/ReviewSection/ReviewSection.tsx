@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import * as z from 'zod';
+import { string } from 'zod';
 
 import { PrimaryButton } from '../../foundation/PrimaryButton/PrimaryButton';
 import { TextArea } from '../../foundation/TextArea/TextArea';
@@ -12,7 +12,7 @@ import type { FormikErrors } from 'formik';
 
 const LESS_THAN_64_LENGTH_REGEX = /^([\s\S\n]{0,8}){0,8}$/u;
 // NOTE: 改行含めて 64 文字以内であるかどうか確認する
-const commentSchema = z.string().regex(LESS_THAN_64_LENGTH_REGEX);
+const commentSchema = string().regex(LESS_THAN_64_LENGTH_REGEX);
 
 interface Props {
   reviews: ReviewFragmentResponse[] | undefined
