@@ -1,23 +1,21 @@
 import classNames from 'classnames';
+import { getMediaType } from '../../../../utils/get_media_type';
+import { DeviceT, GetDeviceType } from '../../../foundation/GetDeviceType/GetDeviceType';
+import { MediaImage } from '../MediaImage/MediaImage';
+import * as styles from './MediaItemPreiewer.styles';
+import type { MediaFileFragmentResponse } from '../../../../graphql/fragments';
 import type { FC } from 'react';
 
-import type { MediaFileFragmentResponse } from '../../../../graphql/fragments';
-import { getMediaType } from '../../../../utils/get_media_type';
-import { DeviceType, GetDeviceType } from '../../../foundation/GetDeviceType';
-import { Image } from '../../../foundation/Image';
-
-import * as styles from './MediaItemPreiewer.styles';
-
-type Props = {
-  file: MediaFileFragmentResponse;
-};
+interface Props {
+  file: MediaFileFragmentResponse
+}
 
 export const MediaItemPreviewer: FC<Props> = ({ file }) => {
   const type = getMediaType(file.filename);
 
   return (
     <div className={styles.container()}>
-      {type === 'image' && <Image fill src={file.filename} />}
+      {type === 'image' && <MediaImage filename={file.filename} />}
       {type === 'video' && (
         <GetDeviceType>
           {({ deviceType }) => (
@@ -27,8 +25,8 @@ export const MediaItemPreviewer: FC<Props> = ({ file }) => {
               muted
               playsInline
               className={classNames(styles.video(), {
-                [styles.video__desktop()]: deviceType === DeviceType.DESKTOP,
-                [styles.video__mobile()]: deviceType === DeviceType.MOBILE,
+                [styles.video__desktop()]: deviceType === DeviceT.DESKTOP,
+                [styles.video__mobile()]: deviceType === DeviceT.MOBILE,
               })}
               src={file.filename}
             />

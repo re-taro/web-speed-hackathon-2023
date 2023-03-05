@@ -1,31 +1,23 @@
-import type { FC } from 'react';
 import { Helmet } from 'react-helmet';
-
-import { Layout } from '../../components/application/Layout';
-import { ProductList } from '../../components/feature/ProductList';
-import { ProductHeroImage } from '../../components/product/ProductHeroImage';
+import { ProductList } from '../../components/feature/ProductList/ProductList';
+import { ProductHeroImage } from '../../components/product/ProductHeroImage/ProductHeroImage';
 import { useFeatures } from '../../hooks/useFeatures';
 import { useRecommendation } from '../../hooks/useRecommendation';
-
 import * as styles from './Top.styles';
+import type { FC } from 'react';
 
 export const Top: FC = () => {
   const { recommendation } = useRecommendation();
   const { features } = useFeatures();
-
-  if (recommendation === undefined || features === undefined) {
-    return null;
-  }
 
   return (
     <>
       <Helmet>
         <title>買えるオーガニック</title>
       </Helmet>
-      <Layout>
+      <div>
         <div>
           <ProductHeroImage product={recommendation.product} title="今週のオススメ" />
-
           <div className={styles.featureList()}>
             {features.map((featureSection) => {
               return (
@@ -37,7 +29,9 @@ export const Top: FC = () => {
             })}
           </div>
         </div>
-      </Layout>
+      </div>
     </>
   );
 };
+
+export default Top;

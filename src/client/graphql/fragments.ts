@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client';
-
 import type { FeatureItem } from '../../model/feature_item';
 import type { FeatureSection } from '../../model/feature_section';
 import type { LimitedTimeOffer } from '../../model/limited_time_offer';
@@ -12,6 +11,7 @@ import type { Recommendation } from '../../model/recommendation';
 import type { Review } from '../../model/review';
 import type { ShoppingCartItem } from '../../model/shopping_cart_item';
 import type { User } from '../../model/user';
+import type { Zipcode } from '../../model/zipcode';
 
 export const MediaFileFragment = gql`
   fragment MediaFileFragment on MediaFile {
@@ -43,29 +43,40 @@ export const ProductMediaFragment = gql`
   }
 `;
 export type ProductMediaFragmentResponse = Pick<ProductMedia, 'id' | 'isThumbnail'> & {
-  file: MediaFileFragmentResponse;
+  file: MediaFileFragmentResponse
 };
 
-export const ProductFragment = gql`
-  ${ProductMediaFragment}
+export const ProductBaseFragment = gql`
   ${LimitedTimeOfferFragment}
 
-  fragment ProductFragment on Product {
+  fragment ProductBaseFragment on Product {
     id
     name
     price
-    description
-    media {
-      ...ProductMediaFragment
-    }
     offers {
       ...LimitedTimeOfferFragment
     }
   }
 `;
-export type ProductFragmentResponse = Pick<Product, 'id' | 'name' | 'price' | 'description'> & {
-  media: ProductMediaFragmentResponse[];
-  offers: LimitedTimeOfferFragmentResponse[];
+export type ProductBaseFragmentResponse = Pick<Product, 'id' | 'name' | 'price'> & {
+  offers: LimitedTimeOfferFragmentResponse[]
+};
+
+export const ProductFragment = gql`
+  ${ProductMediaFragment}
+  ${ProductBaseFragment}
+
+  fragment ProductFragment on Product {
+    ...ProductBaseFragment
+    description
+    media {
+      ...ProductMediaFragment
+    }
+  }
+`;
+export type ProductFragmentResponse = ProductBaseFragmentResponse &
+Pick<Product, 'description'> & {
+  media: ProductMediaFragmentResponse[]
 };
 
 export const ProfileFragment = gql`
@@ -80,7 +91,7 @@ export const ProfileFragment = gql`
   }
 `;
 export type ProfileFragmentResponse = Pick<Profile, 'id' | 'name'> & {
-  avatar: MediaFileFragmentResponse;
+  avatar: MediaFileFragmentResponse
 };
 
 export const UserFragment = gql`
@@ -95,7 +106,7 @@ export const UserFragment = gql`
   }
 `;
 export type UserFragmentResponse = Pick<User, 'id' | 'email'> & {
-  profile: ProfileFragmentResponse;
+  profile: ProfileFragmentResponse
 };
 
 export const ReviewFragment = gql`
@@ -111,7 +122,7 @@ export const ReviewFragment = gql`
   }
 `;
 export type ReviewFragmentResponse = Pick<Review, 'id' | 'postedAt' | 'comment'> & {
-  user: UserFragmentResponse;
+  user: UserFragmentResponse
 };
 
 export const ProductReviewFragment = gql`
@@ -123,9 +134,9 @@ export const ProductReviewFragment = gql`
     }
   }
 `;
-export type ProductReviewFragmentResponse = {
-  reviews: ReviewFragmentResponse[];
-};
+export interface ProductReviewFragmentResponse {
+  reviews: ReviewFragmentResponse[]
+}
 
 export const ProductWithReviewFragment = gql`
   ${ProductFragment}
@@ -139,21 +150,36 @@ export const ProductWithReviewFragment = gql`
   }
 `;
 export type ProductWithReviewFragmentResponse = ProductFragmentResponse & {
-  reviews: ReviewFragmentResponse[];
+  reviews: ReviewFragmentResponse[]
+};
+
+export const ProductToListFragment = gql`
+  ${ProductMediaFragment}
+  ${ProductBaseFragment}
+
+  fragment ProductToListFragment on Product {
+    ...ProductBaseFragment
+    thumbnail {
+      ...ProductMediaFragment
+    }
+  }
+`;
+export type ProductToListFragmentResponse = ProductBaseFragmentResponse & {
+  thumbnail: ProductMediaFragmentResponse
 };
 
 export const RecommendationFragment = gql`
-  ${ProductFragment}
+  ${ProductToListFragment}
 
   fragment RecommendationFragment on Recommendation {
     id
     product {
-      ...ProductFragment
+      ...ProductToListFragment
     }
   }
 `;
 export type RecommendationFragmentResponse = Pick<Recommendation, 'id'> & {
-  product: ProductFragmentResponse;
+  product: ProductToListFragmentResponse
 };
 
 export const ShoppingCartItemFragment = gql`
@@ -168,7 +194,7 @@ export const ShoppingCartItemFragment = gql`
   }
 `;
 export type ShoppingCartItemFragmentResponse = Pick<ShoppingCartItem, 'id' | 'amount'> & {
-  product: ProductWithReviewFragmentResponse;
+  product: ProductWithReviewFragmentResponse
 };
 
 export const OrderFragment = gql`
@@ -185,7 +211,7 @@ export const OrderFragment = gql`
   }
 `;
 export type OrderFragmentResponse = Pick<Order, 'id' | 'zipCode' | 'address' | 'isOrdered'> & {
-  items: ShoppingCartItemFragmentResponse[];
+  items: ShoppingCartItemFragmentResponse[]
 };
 
 export const AuthUserFragment = gql`
@@ -204,22 +230,22 @@ export const AuthUserFragment = gql`
   }
 `;
 export type AuthUserFragmentResponse = UserFragmentResponse & {
-  reviews: ReviewFragmentResponse[];
-  orders: OrderFragmentResponse[];
+  reviews: ReviewFragmentResponse[]
+  orders: OrderFragmentResponse[]
 };
 
 export const FeatureItemFragment = gql`
-  ${ProductFragment}
+  ${ProductToListFragment}
 
   fragment FeatureItemFragment on FeatureItem {
     id
     product {
-      ...ProductFragment
+      ...ProductToListFragment
     }
   }
 `;
 export type FeatureItemFragmentResponse = Pick<FeatureItem, 'id'> & {
-  product: ProductFragmentResponse;
+  product: ProductToListFragmentResponse
 };
 
 export const FeatureSectionFragment = gql`
@@ -234,5 +260,13 @@ export const FeatureSectionFragment = gql`
   }
 `;
 export type FeatureSectionFragmentResponse = Pick<FeatureSection, 'id' | 'title'> & {
-  items: FeatureItemFragmentResponse[];
+  items: FeatureItemFragmentResponse[]
 };
+
+export const ZipcodeFragment = gql`
+  fragment ZipcodeFragment on Zipcode {
+    zipcode
+    address
+  }
+`;
+export type ZipcodeFragmentResponse = Pick<Zipcode, 'zipcode' | 'address'>;

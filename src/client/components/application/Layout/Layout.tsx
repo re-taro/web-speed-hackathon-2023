@@ -1,18 +1,27 @@
-import type { FC, ReactNode } from 'react';
-
+import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
+import { Outlet } from 'react-router-dom';
 import { Footer } from '../../navigators/Footer/Footer';
 import { Header } from '../../navigators/Header/Header';
-
+import { Fallback } from '../../../pages/Fallback/Fallback';
+import { useScrollToTop } from '../Routes/hooks/useScrollToTop';
 import * as styles from './Layout.styles';
+import type { FC } from 'react';
 
-type Props = {
-  children: ReactNode;
+export const Layout: FC = () => {
+  useScrollToTop();
+
+  return (
+    <>
+      <Header />
+      <main className={styles.container()}>
+        <ErrorBoundary fallbackRender={Fallback}>
+          <Suspense fallback={<div style={{ height: '100vh' }} />}>
+            <Outlet />
+          </Suspense>
+        </ErrorBoundary>
+      </main>
+      <Footer />
+    </>
+  );
 };
-
-export const Layout: FC<Props> = ({ children }) => (
-  <>
-    <Header />
-    <main className={styles.container()}>{children}</main>
-    <Footer />
-  </>
-);

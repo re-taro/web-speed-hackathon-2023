@@ -6,15 +6,15 @@ import { User } from './user';
 @Entity()
 export class Profile {
   @PrimaryGeneratedColumn()
-  id!: number;
+    id!: number;
 
   @OneToOne(() => User)
   @JoinColumn()
-  user!: Relation<User>;
+    user!: Relation<User>;
 
   @Column()
-  name!: string;
+    name!: string;
 
   @ManyToOne(() => MediaFile)
-  avatar!: Relation<MediaFile>;
+    avatar!: Relation<MediaFile>;
 }

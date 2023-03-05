@@ -6,20 +6,20 @@ import { User } from './user';
 @Entity()
 export class Order {
   @PrimaryGeneratedColumn()
-  id!: number;
+    id!: number;
 
-  @OneToMany(() => ShoppingCartItem, (item) => item.order)
-  items!: Relation<ShoppingCartItem>[];
+  @OneToMany(() => ShoppingCartItem, item => item.order)
+    items!: Relation<ShoppingCartItem>[];
 
   @ManyToOne(() => User)
-  user!: Relation<User>;
+    user!: Relation<User>;
 
   @Column()
-  zipCode!: string;
+    zipCode!: string;
 
   @Column()
-  address!: string;
+    address!: string;
 
   @Column()
-  isOrdered!: boolean;
+    isOrdered!: boolean;
 }

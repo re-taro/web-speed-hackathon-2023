@@ -5,11 +5,11 @@ import { FeatureItem } from './feature_item';
 @Entity()
 export class FeatureSection {
   @PrimaryGeneratedColumn()
-  id!: number;
+    id!: number;
 
   @Column()
-  title!: string;
+    title!: string;
 
-  @OneToMany(() => FeatureItem, (item) => item.section)
-  items!: Relation<FeatureItem[]>;
+  @OneToMany(() => FeatureItem, item => item.section)
+    items!: Relation<FeatureItem[]>;
 }

@@ -1,15 +1,15 @@
-import type { ReactNode } from 'react';
 import { Component } from 'react';
+import type { ReactNode } from 'react';
 
-export const DeviceType = {
+export const DeviceT = {
   DESKTOP: 'DESKTOP',
   MOBILE: 'MOBILE',
 } as const;
-export type DeviceType = typeof DeviceType[keyof typeof DeviceType];
+export type DeviceType = typeof DeviceT[keyof typeof DeviceT];
 
-type Props = {
-  children: ({ deviceType }: { deviceType: DeviceType }) => ReactNode;
-};
+interface Props {
+  children: ({ deviceType }: { deviceType: DeviceType }) => ReactNode
+}
 
 export class GetDeviceType extends Component<Props> {
   private _timer: number | null;
@@ -23,25 +23,22 @@ export class GetDeviceType extends Component<Props> {
 
   componentDidMount(): void {
     this._checkIsDesktop();
+    window.addEventListener('resize', this._checkIsDesktop.bind(this));
   }
 
   componentWillUnmount(): void {
-    if (this._timer != null) {
-      window.clearImmediate(this._timer);
-    }
+    window.removeEventListener('resize', this._checkIsDesktop.bind(this));
   }
 
   private _checkIsDesktop() {
     this._windowWidth = window.innerWidth;
-    this.forceUpdate(() => {
-      this._timer = window.setImmediate(this._checkIsDesktop.bind(this));
-    });
+    this.forceUpdate();
   }
 
   render() {
     const { children: render } = this.props;
     return render({
-      deviceType: this._windowWidth >= 1024 ? DeviceType.DESKTOP : DeviceType.MOBILE,
+      deviceType: this._windowWidth >= 1024 ? DeviceT.DESKTOP : DeviceT.MOBILE,
     });
   }
 }

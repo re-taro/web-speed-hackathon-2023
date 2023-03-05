@@ -1,12 +1,23 @@
-import 'core-js';
-import 'date-time-format-timezone';
-import 'setimmediate';
-import './temporal';
+import { Temporal, toTemporalInstant } from '@js-temporal/polyfill';
+
+if (!('Temporal' in window)) {
+  // @ts-expect-error polyfill
+  window.Temporal = Temporal;
+}
+
+if (!('toTemporalInstant' in Date.prototype)) {
+  // @ts-expect-error polyfill
+  // eslint-disable-next-line no-extend-native
+  Date.prototype.toTemporalInstant = toTemporalInstant;
+}
 
 declare global {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+
   interface Window {
-    setImmediate: <T extends unknown[]>(callback: (...args: T) => void, ...args: T) => number;
-    clearImmediate: (handle: number) => void;
+    Temporal: typeof Temporal
+  }
+
+  interface Date {
+    toTemporalInstant: typeof toTemporalInstant
   }
 }

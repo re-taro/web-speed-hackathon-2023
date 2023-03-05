@@ -1,31 +1,26 @@
-import _ from 'lodash';
-import type { FC } from 'react';
-import { memo } from 'react';
-
+import { DeviceT, GetDeviceType } from '../../foundation/GetDeviceType/GetDeviceType';
+import { ProductGridList } from '../ProductGridList/ProductGridList';
+import { ProductListSlider } from '../ProductListSlider/ProductListSlider';
 import type { FeatureSectionFragmentResponse } from '../../../graphql/fragments';
-import { DeviceType, GetDeviceType } from '../../foundation/GetDeviceType';
-import { ProductGridList } from '../ProductGridList';
-import { ProductListSlider } from '../ProductListSlider';
+import type { FC } from 'react';
 
-type Props = {
-  featureSection: FeatureSectionFragmentResponse;
-};
+interface Props {
+  featureSection: FeatureSectionFragmentResponse
+}
 
-export const ProductList: FC<Props> = memo(({ featureSection }) => {
+export const ProductList: FC<Props> = ({ featureSection }) => {
   return (
     <GetDeviceType>
       {({ deviceType }) => {
         switch (deviceType) {
-          case DeviceType.DESKTOP: {
+          case DeviceT.DESKTOP: {
             return <ProductListSlider featureSection={featureSection} />;
           }
-          case DeviceType.MOBILE: {
+          case DeviceT.MOBILE: {
             return <ProductGridList featureSection={featureSection} />;
           }
         }
       }}
     </GetDeviceType>
   );
-}, _.isEqual);
-
-ProductList.displayName = 'ProductList';
+};

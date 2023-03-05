@@ -7,9 +7,8 @@ export async function getFileList(parent: string): Promise<string[]> {
 
   for (const dirent of dirents) {
     if (dirent.isFile()) {
-      if (dirent.name.startsWith('.')) {
+      if (dirent.name.startsWith('.'))
         continue;
-      }
 
       const file = path.join(parent, dirent.name);
       list.push(file);

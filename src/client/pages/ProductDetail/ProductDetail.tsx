@@ -1,13 +1,10 @@
-import type { FC } from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
-
-import { Layout } from '../../components/application/Layout';
-import { WidthRestriction } from '../../components/foundation/WidthRestriction';
-import { ProductMediaListPreviewer } from '../../components/product/ProductMediaListPreviewer';
-import { ProductOverview } from '../../components/product/ProductOverview';
-import { ProductPurchaseSection } from '../../components/product/ProductPurchaseSeciton';
-import { ReviewSection } from '../../components/review/ReviewSection';
+import { WidthRestriction } from '../../components/foundation/WidthRestriction/WidthRestriction';
+import { ProductMediaListPreviewer } from '../../components/product/ProductMediaListPreviewer/ProductMediaListPreviewer';
+import { ProductOverview } from '../../components/product/ProductOverview/ProductOverview';
+import { ProductPurchaseSection } from '../../components/product/ProductPurchaseSeciton/ProductPurchaseSection';
+import { ReviewSection } from '../../components/review/ReviewSection/ReviewSection';
 import { useActiveOffer } from '../../hooks/useActiveOffer';
 import { useAmountInCart } from '../../hooks/useAmountInCart';
 import { useAuthUser } from '../../hooks/useAuthUser';
@@ -15,14 +12,13 @@ import { useProduct } from '../../hooks/useProduct';
 import { useReviews } from '../../hooks/useReviews';
 import { useSendReview } from '../../hooks/useSendReview';
 import { useUpdateCartItem } from '../../hooks/useUpdateCartItems';
-import { useOpenModal } from '../../store/modal';
+import { useOpenModal } from '../../store/modal/hooks';
 import { normalizeCartItemCount } from '../../utils/normalize_cart_item';
-
 import * as styles from './ProductDetail.styles';
+import type { FC } from 'react';
 
 export const ProductDetail: FC = () => {
   const { productId } = useParams();
-
   const { product } = useProduct(Number(productId));
   const { reviews } = useReviews(product?.id);
   const { isAuthUser } = useAuthUser();
@@ -30,8 +26,7 @@ export const ProductDetail: FC = () => {
   const { updateCartItem } = useUpdateCartItem();
   const handleOpenModal = useOpenModal();
   const { amountInCart } = useAmountInCart(Number(productId));
-  const { activeOffer } = useActiveOffer(product);
-
+  const { activeOffer } = useActiveOffer(product?.offers);
   const handleSubmitReview = ({ comment }: { comment: string }) => {
     sendReview({
       variables: {
@@ -40,7 +35,6 @@ export const ProductDetail: FC = () => {
       },
     });
   };
-
   const handleUpdateItem = (productId: number, amount: number) => {
     updateCartItem({
       variables: { amount: normalizeCartItemCount(amount), productId },
@@ -54,7 +48,7 @@ export const ProductDetail: FC = () => {
           <title>{product.name}</title>
         </Helmet>
       )}
-      <Layout>
+      <div>
         <WidthRestriction>
           <div className={styles.container()}>
             <section className={styles.details()}>
@@ -72,14 +66,15 @@ export const ProductDetail: FC = () => {
                 />
               </div>
             </section>
-
             <section className={styles.reviews()}>
               <h2 className={styles.reviewsHeading()}>レビュー</h2>
               <ReviewSection hasSignedIn={isAuthUser} onSubmitReview={handleSubmitReview} reviews={reviews} />
             </section>
           </div>
         </WidthRestriction>
-      </Layout>
+      </div>
     </>
   );
 };
+
+export default ProductDetail;

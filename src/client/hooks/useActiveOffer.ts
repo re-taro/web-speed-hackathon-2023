@@ -1,26 +1,23 @@
 import { useEffect, useState } from 'react';
-
-import type { LimitedTimeOfferFragmentResponse, ProductFragmentResponse } from '../graphql/fragments';
 import { getActiveOffer } from '../utils/get_active_offer';
+import type { LimitedTimeOfferFragmentResponse } from '../graphql/fragments';
 
-export function useActiveOffer(product: ProductFragmentResponse | undefined) {
+export function useActiveOffer(offers: LimitedTimeOfferFragmentResponse[] | undefined) {
   const [activeOffer, setActiveOffer] = useState<LimitedTimeOfferFragmentResponse | undefined>(undefined);
-
   useEffect(() => {
     const timer = setInterval(() => {
-      if (!product) {
+      if (!offers) {
         setActiveOffer(undefined);
         return;
       }
-
-      const offer = getActiveOffer(product.offers);
+      const offer = getActiveOffer(offers);
       setActiveOffer(offer);
-    }, 0);
+    }, 1000);
 
     return () => {
       clearInterval(timer);
     };
-  }, [product]);
+  }, [offers]);
 
   return { activeOffer };
 }

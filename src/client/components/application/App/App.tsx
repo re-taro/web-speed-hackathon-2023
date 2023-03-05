@@ -1,14 +1,16 @@
+import { Suspense } from 'react';
+import { SignInModal } from '../../modal/SignInModal/SignInModal';
+import { SignUpModal } from '../../modal/SignUpModal/SignUpModal';
+import { Providers } from '../Providers/Providers';
+import { Routes } from '../Routes/Routes';
 import type { FC } from 'react';
 
-import { SignInModal } from '../../modal/SignInModal';
-import { SignUpModal } from '../../modal/SignUpModal';
-import { Providers } from '../Providers';
-import { Routes } from '../Routes';
-
 export const App: FC = () => (
-  <Providers>
-    <Routes />
-    <SignInModal />
-    <SignUpModal />
-  </Providers>
+  <Suspense fallback={null}>
+    <Providers>
+      <Routes />
+      <SignInModal />
+      <SignUpModal />
+    </Providers>
+  </Suspense>
 );

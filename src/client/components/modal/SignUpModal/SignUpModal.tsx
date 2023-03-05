@@ -1,46 +1,39 @@
-import type { FormikErrors } from 'formik';
-import { useFormik } from 'formik';
-import type { FC } from 'react';
-import { useState } from 'react';
-import * as z from 'zod';
-
+import { useCallback, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useSignUp } from '../../../hooks/useSignUp';
-import { useCloseModal, useIsOpenModal, useOpenModal } from '../../../store/modal';
-import { Modal } from '../../foundation/Modal';
-import { PrimaryButton } from '../../foundation/PrimaryButton';
-import { TextInput } from '../../foundation/TextInput';
-
+import { useCloseModal, useIsOpenModal, useOpenModal } from '../../../store/modal/hooks';
+import { Modal } from '../../foundation/Modal/Modal';
+import { PrimaryButton } from '../../foundation/PrimaryButton/PrimaryButton';
+import { WrapedTextInput } from '../../foundation/TextInput/WrapedTextInput';
 import * as styles from './SignUpModal.styles';
+import type { SubmitHandler } from 'react-hook-form';
+import type { FC } from 'react';
 
 const NOT_INCLUDED_AT_CHAR_REGEX = /^(?:[^@]*){6,}$/;
 const NOT_INCLUDED_SYMBOL_CHARS_REGEX = /^(?:(?:[a-zA-Z0-9]*){2,})+$/;
 
-// NOTE: 文字列に @ が含まれているか確認する
-const emailSchema = z.string().refine((v) => !NOT_INCLUDED_AT_CHAR_REGEX.test(v));
-// NOTE: 文字列に英数字以外の文字が含まれているか確認する
-const passwordSchema = z.string().refine((v) => !NOT_INCLUDED_SYMBOL_CHARS_REGEX.test(v));
-
-export type SignUpForm = {
-  email: string;
-  name: string;
-  password: string;
-};
+export interface SignUpForm {
+  email: string
+  name: string
+  password: string
+}
 
 export const SignUpModal: FC = () => {
   const isOpened = useIsOpenModal('SIGN_UP');
   const { signUp } = useSignUp();
-
   const handleOpenModal = useOpenModal();
   const handleCloseModal = useCloseModal();
-
   const [submitError, setSubmitError] = useState<Error | null>(null);
-  const formik = useFormik<SignUpForm>({
-    initialValues: {
+  const { control, formState, handleSubmit, reset } = useForm<SignUpForm>({
+    defaultValues: {
       email: '',
       name: '',
       password: '',
     },
-    async onSubmit(values, { resetForm }) {
+    mode: 'onChange',
+  });
+  const onSubmit = useCallback<SubmitHandler<SignUpForm>>(
+    async(values) => {
       try {
         await signUp({
           variables: {
@@ -49,25 +42,15 @@ export const SignUpModal: FC = () => {
             password: values.password,
           },
         });
-        resetForm();
+        reset();
         setSubmitError(null);
         handleCloseModal();
       } catch (err) {
         setSubmitError(err as Error);
       }
     },
-    validate(values) {
-      const errors: FormikErrors<SignUpForm> = {};
-      if (values.email != '' && !emailSchema.safeParse(values.email).success) {
-        errors['email'] = 'メールアドレスの形式が間違っています';
-      }
-      if (values.password != '' && !passwordSchema.safeParse(values.password).success) {
-        errors['password'] = '英数字以外の文字を含めてください';
-      }
-      return errors;
-    },
-    validateOnChange: true,
-  });
+    [handleCloseModal, reset, signUp],
+  );
 
   return (
     <Modal onHide={handleCloseModal} show={isOpened}>
@@ -82,40 +65,43 @@ export const SignUpModal: FC = () => {
             ログイン
           </button>
         </header>
-        <form className={styles.form()} onSubmit={formik.handleSubmit}>
+        <form className={styles.form()} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.inputList()}>
-            <TextInput
+            <WrapedTextInput
               required
-              id="email"
+              control={control}
               label="メールアドレス"
-              onChange={formik.handleChange}
+              name="email"
               placeholder="メールアドレスを入力"
+              rules={{
+                validate: v =>
+                  v === '' || !NOT_INCLUDED_AT_CHAR_REGEX.test(v) || 'メールアドレスの形式が間違っています',
+              }}
               type="email"
-              value={formik.values.email}
             />
-            <p className={styles.error()}>{formik.errors.email}</p>
-
-            <TextInput
+            <p className={styles.error()}>{formState.errors.email?.message}</p>
+            <WrapedTextInput
               required
-              id="name"
+              control={control}
               label="名前"
-              onChange={formik.handleChange}
+              name="name"
               placeholder="名前を入力"
               type="text"
-              value={formik.values.name}
             />
-            <p className={styles.error()}>{formik.errors.name}</p>
-
-            <TextInput
+            <p className={styles.error()}>{formState.errors.name?.message}</p>
+            <WrapedTextInput
               required
-              id="password"
+              control={control}
               label="パスワード"
-              onChange={formik.handleChange}
+              name="password"
               placeholder="パスワードを入力"
+              rules={{
+                validate: v =>
+                  v === '' || !NOT_INCLUDED_SYMBOL_CHARS_REGEX.test(v) || '英数字以外の文字を含めてください',
+              }}
               type="password"
-              value={formik.values.password}
             />
-            <p className={styles.error()}>{formik.errors.password}</p>
+            <p className={styles.error()}>{formState.errors.password?.message}</p>
           </div>
           <div className={styles.submitButton()}>
             <PrimaryButton size="base" type="submit">

@@ -7,14 +7,14 @@ import { Product } from './product';
 @Index(['order.id', 'product.id'], { unique: true })
 export class ShoppingCartItem {
   @PrimaryGeneratedColumn()
-  id!: number;
+    id!: number;
 
   @ManyToOne(() => Product)
-  product!: Relation<Product>;
+    product!: Relation<Product>;
 
   @ManyToOne(() => Order)
-  order!: Relation<Order>;
+    order!: Relation<Order>;
 
   @Column()
-  amount!: number;
+    amount!: number;
 }

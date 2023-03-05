@@ -5,17 +5,17 @@ import { Product } from './product';
 @Entity()
 export class LimitedTimeOffer {
   @PrimaryGeneratedColumn()
-  id!: number;
+    id!: number;
 
   @ManyToOne(() => Product)
-  product!: Relation<Product>;
+    product!: Relation<Product>;
 
   @Column()
-  price!: number;
+    price!: number;
 
   @Column()
-  startDate!: string;
+    startDate!: string;
 
   @Column()
-  endDate!: string;
+    endDate!: string;
 }
