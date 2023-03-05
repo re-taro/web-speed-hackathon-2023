@@ -6,7 +6,7 @@ import { normalizeCartItemCount } from '../../../utils/normalize_cart_item';
 import { Anchor } from '../../foundation/Anchor/Anchor';
 import { AspectRatio } from '../../foundation/AspectRatio/AspectRatio';
 import { DeviceT, GetDeviceType } from '../../foundation/GetDeviceType/GetDeviceType';
-import { Image } from '../../foundation/Image/Image';
+import { CartImage } from '../CartImage/CartImage';
 import { OutlineButton } from '../../foundation/OutlineButton/OutlineButton';
 import { ProductOfferLabel } from '../../product/ProductOfferLabel/ProductOfferLabel';
 
@@ -52,7 +52,7 @@ export const CartItem: FC<Props> = ({ item, onRemove, onUpdate }) => {
                         })}
                       >
                         <AspectRatio ratioHeight={9} ratioWidth={16}>
-                          <Image fill src={thumbnailFile.filename} />
+                          <CartImage filename={thumbnailFile.filename} />
                         </AspectRatio>
                         {activeOffer !== undefined && (
                         <div className={styles.offerLabel()}>
