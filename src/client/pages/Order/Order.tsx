@@ -12,17 +12,10 @@ import type { FC } from 'react';
 
 export const Order: FC = () => {
   const navigate = useNavigate();
-  const { authUser, authUserLoading, isAuthUser } = useAuthUser();
+  const { authUser } = useAuthUser();
   const { updateCartItem } = useUpdateCartItem();
   const { submitOrder } = useSubmitOrder();
   const { order } = useOrder();
-  if (authUserLoading)
-    return null;
-  if (!isAuthUser) {
-    navigate('/');
-
-    return null;
-  }
   const renderContents = () => {
     if (!authUser || order === undefined || order.items.length === 0) {
       return (
@@ -56,7 +49,6 @@ export const Order: FC = () => {
             order={order}
           />
         </div>
-
         <div className={styles.addressForm()}>
           <h2 className={styles.addressFormHeading()}>お届け先</h2>
           <OrderForm
