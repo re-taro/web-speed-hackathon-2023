@@ -1,7 +1,6 @@
 
 import { AspectRatio } from '../../foundation/AspectRatio/AspectRatio';
-import { Image } from '../../foundation/Image/Image';
-
+import { ReviewIcon } from '../ReviewIcon/ReviewIcon';
 import * as styles from './ReviewList.styles';
 import type { ReviewFragmentResponse } from '../../../graphql/fragments';
 import type { FC } from 'react';
@@ -30,7 +29,7 @@ export const ReviewList: FC<Props> = ({ reviews }) => {
           <li key={review.id} className={styles.item()} data-testid="review-list-item">
             <div className={styles.avaterImage()}>
               <AspectRatio ratioHeight={1} ratioWidth={1}>
-                <Image height={52} src={review.user.profile.avatar.filename.replace(/\.jpg$/, '.webp')} width={52} />
+                <ReviewIcon filename={review.user.profile.avatar.filename} />
               </AspectRatio>
             </div>
             <div className={styles.content()}>
