@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { useMemo } from 'react';
 import { Anchor } from '../../foundation/Anchor/Anchor';
 import { AspectRatio } from '../../foundation/AspectRatio/AspectRatio';
 import { DeviceT, GetDeviceType } from '../../foundation/GetDeviceType/GetDeviceType';
@@ -13,6 +14,9 @@ interface Props {
 }
 
 export const ProductHeroImage: FC<Props> = ({ product, title }) => {
+  const imagePath = useMemo(() => {
+    return product.thumbnail.file.filename.replace(/\.jpg$/, '.webp');
+  }, [product.thumbnail.file.filename]);
   return (
     <GetDeviceType>
       {({ deviceType }) => {
@@ -21,7 +25,7 @@ export const ProductHeroImage: FC<Props> = ({ product, title }) => {
             <Anchor href={`/product/${product.id}`}>
               <div className={styles.container()}>
                 <AspectRatio ratioHeight={9} ratioWidth={16}>
-                  <img className={styles.image()} height={576} src={product.thumbnail.file.filename} width={1024} />
+                  <img className={styles.image()} height={576} src={imagePath} width={1024} />
                 </AspectRatio>
                 <div className={styles.overlay()}>
                   <p
