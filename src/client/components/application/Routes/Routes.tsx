@@ -1,6 +1,6 @@
 import * as Router from 'react-router-dom';
 import { lazy } from 'react';
-
+import { Layout } from '../Layout/Layout';
 import { useScrollToTop } from './hooks/useScrollToTop';
 import type { FC } from 'react';
 
@@ -15,11 +15,13 @@ export const Routes: FC = () => {
 
   return (
     <Router.Routes>
-      <Router.Route element={<Top />} path="/" />
-      <Router.Route element={<ProductDetail />} path="/product/:productId" />
-      <Router.Route element={<Order />} path="/order" />
-      <Router.Route element={<OrderComplete />} path="/order/complete" />
-      <Router.Route element={<NotFound />} path="*" />
+      <Router.Route element={<Layout />} path="/">
+        <Router.Route element={<Top />} path="" />
+        <Router.Route element={<ProductDetail />} path="product/:productId" />
+        <Router.Route element={<Order />} path="order" />
+        <Router.Route element={<OrderComplete />} path="order/complete" />
+        <Router.Route element={<NotFound />} path="*" />
+      </Router.Route>
     </Router.Routes>
   );
 };

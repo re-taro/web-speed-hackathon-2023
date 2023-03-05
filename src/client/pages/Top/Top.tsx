@@ -9,8 +9,6 @@ import type { FC } from 'react';
 export const Top: FC = () => {
   const { recommendation } = useRecommendation();
   const { features } = useFeatures();
-  if (recommendation === undefined || features === undefined)
-    return null;
 
   return (
     <>
