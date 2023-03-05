@@ -13,8 +13,11 @@ export default defineConfig(async({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks: {
-            vendor: ['react', 'react-dom', 'react-router-dom'],
+            vendor: ['react', 'react-dom', 'react-router-dom', 'react-helmet'],
             apollo: ['@apollo/client', 'graphql'],
+            formik: ['formik'],
+            zod: ['zod'],
+            temporal: ['@js-temporal/polyfill'],
           },
         },
       },
